@@ -1,21 +1,9 @@
 package pl.agh.edu.pl.kompilatory.izanat;
 
-import org.sat4j.minisat.SolverFactory;
-import org.sat4j.reader.DimacsReader;
-import org.sat4j.reader.ParseFormatException;
-import org.sat4j.specs.ContradictionException;
-import org.sat4j.specs.IProblem;
-import org.sat4j.specs.ISolver;
-import org.sat4j.specs.TimeoutException;
-
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.*;
 import java.util.List;
 
 /**
@@ -25,7 +13,7 @@ public class GUI {
     private JFrame frame;
     private JButton addNewStudentButton;
     private static int count;
-    private String [] hours = {"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24"};
+    private String [] hours = {"8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","1","2","3","4","5","6","7"};
 
     private AllConstraints allConstraints = new AllConstraints();
     public GUI()
@@ -75,8 +63,17 @@ public class GUI {
                             lessonTimeForStudentPanel.add(addConstraintButton);
                             addConstraintButton.addActionListener(new ActionListener() {
                                 public void actionPerformed(ActionEvent e) {
-                                    allConstraints.addContraintToStudent(studentNameField.getText(),Integer.parseInt(startLesson.getSelectedItem().toString()),Integer.parseInt(endLesson.getSelectedItem().toString()),count);
-                                    count++;
+                                    int start = Integer.parseInt(startLesson.getSelectedItem().toString());
+                                    int end = Integer.parseInt(endLesson.getSelectedItem().toString());
+                                    if(end<=start){
+                                        JOptionPane.showMessageDialog(null, "Lesson cannot end before it's start");
+                                    }
+                                    else {
+                                        if(!allConstraints.checkIfConstraintExists(studentNameField.getText(),start,end)) {
+                                            allConstraints.addContraintToStudent(studentNameField.getText(), start, end, count);
+                                            count++;
+                                        }
+                                    }
                                 }
                             });
                             concreteStudentConstraintsPanel.add(lessonTimeForStudentPanel);
@@ -98,7 +95,6 @@ public class GUI {
                 allConstraints.printAllConstraint();
                 List<Constraint> trueConstraint = allConstraints.solve();
                 JFrame result = new JFrame("Schedule");
-                result.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 result.setLayout(new GridLayout(0, 1, 2, 2));
                 if(trueConstraint!=null){
                     for(Constraint c:trueConstraint){

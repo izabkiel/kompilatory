@@ -20,29 +20,9 @@ public class AllConstraints {
     private int numberOfClouses = 0;
     private int variables = 0;
 
-    public List<SpecificSubjectAllConstraints> getConstraints() {
-        return constraints;
-    }
-
-    public void setConstraints(List<SpecificSubjectAllConstraints> constraints) {
-        this.constraints = constraints;
-    }
-
     public AllConstraints() {
-/*        SpecificSubjectAllConstraints math = new SpecificSubjectAllConstraints();
-        SpecificSubjectAllConstraints geo = new SpecificSubjectAllConstraints();
-        SpecificSubjectAllConstraints physic = new SpecificSubjectAllConstraints();
-        math.addConstrait(new Constraint("Matematyka",1,3,1));
-        math.addConstrait(new Constraint("Matematyka",2,5,2));
-        geo.addConstrait(new Constraint("Geo",1,3,3));
-        geo.addConstrait(new Constraint("Geo",6,8,4));
-        physic.addConstrait(new Constraint("Physic",5,8,5));
-        physic.addConstrait(new Constraint("Physic",10,11,6));
-        constraints.add(math);
-        constraints.add(geo);
-        constraints.add(physic);
-        makeCondition();*/
     }
+
 
     public void printAllConstraint(){
         System.out.println("------------");
@@ -64,7 +44,7 @@ public class AllConstraints {
         }
     }
 
-    public List<Constraint> getSpecificStudentAllContraints(String name){
+    private List<Constraint> getSpecificStudentAllContraints(String name){
         for (SpecificSubjectAllConstraints s : constraints){
                 if(s.getConstraints().get(0).getName().equals(name)){
                     return s.getConstraints();
@@ -72,9 +52,18 @@ public class AllConstraints {
         }
         return null;
     }
-    public boolean checkIfStudentExists(String name){
+
+    private boolean checkIfStudentExists(String name){
         for (SpecificSubjectAllConstraints s : constraints){
             if(s.getConstraints().get(0).getName().equals(name))
+                return true;
+        }
+        return false;
+    }
+
+    public boolean checkIfConstraintExists(String name, int start, int end){
+        for(SpecificSubjectAllConstraints s:constraints){
+            if(s.checkIfConstraintExist(name,start,end))
                 return true;
         }
         return false;
@@ -90,11 +79,6 @@ public class AllConstraints {
             if ( problem.isSatisfiable()) {
                 System.out.println(" Satisfiable !");
                 String decodeMessage = reader.decode( problem.model());
-  /*              List <Integer> trueConditions = getTrueConditions(decodeMessage);
-                System.out.println("Warunki, które powinny być prawdziwe");
-                for(int i: trueConditions){
-                    System.out.print(i+" ");
-                }*/
                 return getTrueConstraints(decodeMessage);
 
             } else {
@@ -141,7 +125,8 @@ public class AllConstraints {
         }
         return trueConditions;
     }
-    public void makeCondition(){
+
+    private void makeCondition(){
         numberOfClouses = constraints.size();
         String c ="";
         for(SpecificSubjectAllConstraints s: constraints){
@@ -151,8 +136,9 @@ public class AllConstraints {
             c = c + specificSubjectCondition(s);
         }
 
-        for(int i = 0;i<constraints.size()-1;i++) {
-            c = c + checkOverlappingTime(constraints.get(i).getConstraints(), constraints.get(i+1).getConstraints());
+        for(int i = 0;i<constraints.size();i++) {
+            for(int j=i+1;j<constraints.size();j++)
+                c = c + checkOverlappingTime(constraints.get(i).getConstraints(), constraints.get(j).getConstraints());
         }
         writeToFile("p cnf "+variables+" "+numberOfClouses+"\n"+c);
     }
@@ -179,6 +165,7 @@ public class AllConstraints {
         }
         return c;
     }
+
     private String specificSubjectCondition(SpecificSubjectAllConstraints s) {
         String c = "";
         for(Constraint constraint :s.getConstraints()){
@@ -186,5 +173,4 @@ public class AllConstraints {
         }
         return c+"0 ";
     }
-
 }

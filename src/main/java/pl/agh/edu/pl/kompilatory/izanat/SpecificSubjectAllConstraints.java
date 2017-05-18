@@ -23,6 +23,14 @@ public class SpecificSubjectAllConstraints {
     public void addConstrait(Constraint c){
         constraints.add(c);
     }
+    public boolean checkIfConstraintExist(String name, int start, int end){
+        for(Constraint c:constraints){
+            if(c.getName().equals(name) && c.getEnd() == end && c.getStart()==start){
+                return true;
+            }
+        }
+        return false;
+    }
 
     public Constraint getConstraintById(int id){
         for(Constraint c:constraints){
