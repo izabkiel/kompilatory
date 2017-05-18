@@ -22,19 +22,19 @@ public class GUI {
     }
 
     public void displayGUI() {
-        frame = new JFrame("JFrame Example");
+        frame = new JFrame("Schedule generator");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         BorderLayout layout = new BorderLayout();
         frame.setLayout(layout);
-        addNewStudentButton = new JButton("Add Student for his constraints");
+        addNewStudentButton = new JButton("Add new Student and his preferences");
         GridLayout layoutForConstraints = new GridLayout(0, 1, 2, 2);
         final JPanel constraintsPanel = new JPanel(layoutForConstraints);
         JButton generateSchedule = new JButton("Generate schedule");
         addNewStudentButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
                 final JPanel studentConstraintPanel = new JPanel(new BorderLayout());
-                JButton addConstraintToStudent = new JButton("Add Constraint to student");
+                JButton addConstraintToStudent = new JButton("Add preferences for student");
                 final JTextField studentNameField = new JTextField();
                 studentNameField.setName("user" + count);
                 studentNameField.setPreferredSize(new Dimension(100,20));
@@ -54,8 +54,8 @@ public class GUI {
                             JPanel lessonTimeForStudentPanel = new JPanel(new FlowLayout());
                             final JComboBox startLesson = new JComboBox(hours);
                             final JComboBox endLesson = new JComboBox(hours);
-                            JButton addConstraintButton = new JButton("Add constraint");
-                            lessonTimeForStudentPanel.add(new Label("Add time constraint for "+studentName));
+                            JButton addConstraintButton = new JButton("Add");
+                            lessonTimeForStudentPanel.add(new Label("Add prefered hours for "+studentName));
                             lessonTimeForStudentPanel.add(new Label("Start of lesson"));
                             lessonTimeForStudentPanel.add(startLesson);
                             lessonTimeForStudentPanel.add(new Label("End of lesson"));
