@@ -22,6 +22,14 @@ public class SpecificSubjectAllConstraints {
 
     public void addConstrait(Constraint c){
         constraints.add(c);
+    }
 
+    public Constraint getConstraintById(int id){
+        for(Constraint c:constraints){
+            if(c.getId()==id){
+                return c;
+            }
+        }
+        return null;
     }
 }

@@ -1,6 +1,13 @@
 package pl.agh.edu.pl.kompilatory.izanat;
 
-import javax.print.DocFlavor;
+import org.sat4j.minisat.SolverFactory;
+import org.sat4j.reader.DimacsReader;
+import org.sat4j.reader.ParseFormatException;
+import org.sat4j.specs.ContradictionException;
+import org.sat4j.specs.IProblem;
+import org.sat4j.specs.ISolver;
+import org.sat4j.specs.TimeoutException;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,8 +20,16 @@ public class AllConstraints {
     private int numberOfClouses = 0;
     private int variables = 0;
 
+    public List<SpecificSubjectAllConstraints> getConstraints() {
+        return constraints;
+    }
+
+    public void setConstraints(List<SpecificSubjectAllConstraints> constraints) {
+        this.constraints = constraints;
+    }
+
     public AllConstraints() {
-        SpecificSubjectAllConstraints math = new SpecificSubjectAllConstraints();
+/*        SpecificSubjectAllConstraints math = new SpecificSubjectAllConstraints();
         SpecificSubjectAllConstraints geo = new SpecificSubjectAllConstraints();
         SpecificSubjectAllConstraints physic = new SpecificSubjectAllConstraints();
         math.addConstrait(new Constraint("Matematyka",1,3,1));
@@ -26,9 +41,106 @@ public class AllConstraints {
         constraints.add(math);
         constraints.add(geo);
         constraints.add(physic);
-        makeCondition();
+        makeCondition();*/
     }
 
+    public void printAllConstraint(){
+        System.out.println("------------");
+        for(SpecificSubjectAllConstraints s : constraints){
+            for(Constraint c :s.getConstraints()){
+                System.out.println(c.getName()+" "+c.getStart()+" "+c.getEnd()+" "+c.getId());
+            }
+        }
+    }
+
+    public void addContraintToStudent(String name, int start, int end, int id){
+        if(checkIfStudentExists(name)){
+            getSpecificStudentAllContraints(name).add(new Constraint(name, start, end, id));
+        }
+        else{
+            SpecificSubjectAllConstraints s = new SpecificSubjectAllConstraints();
+            s.addConstrait(new Constraint(name, start, end, id));
+            constraints.add(s);
+        }
+    }
+
+    public List<Constraint> getSpecificStudentAllContraints(String name){
+        for (SpecificSubjectAllConstraints s : constraints){
+                if(s.getConstraints().get(0).getName().equals(name)){
+                    return s.getConstraints();
+            }
+        }
+        return null;
+    }
+    public boolean checkIfStudentExists(String name){
+        for (SpecificSubjectAllConstraints s : constraints){
+            if(s.getConstraints().get(0).getName().equals(name))
+                return true;
+        }
+        return false;
+    }
+
+    public List<Constraint> solve(){
+        makeCondition();
+        ISolver solver = SolverFactory.newDefault ();
+        solver.setTimeout (3600); // 1 hour timeout
+        DimacsReader reader = new DimacsReader( solver );
+        try {
+            IProblem problem = reader.parseInstance("elo.cnf");
+            if ( problem.isSatisfiable()) {
+                System.out.println(" Satisfiable !");
+                String decodeMessage = reader.decode( problem.model());
+  /*              List <Integer> trueConditions = getTrueConditions(decodeMessage);
+                System.out.println("Warunki, które powinny być prawdziwe");
+                for(int i: trueConditions){
+                    System.out.print(i+" ");
+                }*/
+                return getTrueConstraints(decodeMessage);
+
+            } else {
+                System.out.println(" Unsatisfiable !");
+            }
+        } catch ( FileNotFoundException e) {
+            System.out.print("File not fourd");
+        } catch ( ParseFormatException e) {
+            System.out.println("ParseFormatException");
+            e.printStackTrace();
+        } catch ( IOException e) {
+            System.out.print("IOExceptopn");
+        } catch ( ContradictionException e) {
+            System.out.println(" Unsatisfiable ( trivial )!");
+        } catch ( TimeoutException e) {
+            System.out.println(" Timeout , sorry !");
+        }
+        return null;
+    }
+
+    private List<Constraint> getTrueConstraints(String decodeMessage){
+        List<Integer> list = getTrueConditions(decodeMessage);
+        List<Constraint> trueConstraints = new ArrayList<Constraint>();
+        for(int i:list){
+            for(SpecificSubjectAllConstraints specificSubjectAllConstraints : constraints){
+                if(specificSubjectAllConstraints.getConstraintById(i)!=null){
+                    trueConstraints.add(specificSubjectAllConstraints.getConstraintById(i));
+                }
+            }
+        }
+        return trueConstraints;
+    }
+
+    private List<Integer> getTrueConditions(String decodeMessage){
+        List <Integer> trueConditions = new ArrayList<Integer>();
+        System.out.println( decodeMessage);
+        for(int i=0;i<decodeMessage.length();i++){
+            if(decodeMessage.charAt(i)=='-')
+                i=i+2;
+            else{
+                trueConditions.add(Integer.parseInt(decodeMessage.charAt(i)+""));
+                i++;
+            }
+        }
+        return trueConditions;
+    }
     public void makeCondition(){
         numberOfClouses = constraints.size();
         String c ="";
