@@ -93,18 +93,23 @@ public class GUI {
         generateSchedule.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ea) {
                 allConstraints.printAllConstraint();
-                List<Constraint> trueConstraint = allConstraints.solve();
-                JFrame result = new JFrame("Schedule");
-                result.setLayout(new GridLayout(0, 1, 2, 2));
+                String[][] trueConstraint = allConstraints.getTableOfResults(allConstraints.solve());
+                JFrame resultWindow = new JFrame("Schedule");
+                resultWindow.setLayout(new GridLayout(0, 1, 2, 2));
+                //resultWindow.setSize(100,100);
+
                 if(trueConstraint!=null){
-                    for(Constraint c:trueConstraint){
-                        result.add(new Label(c.getName()+" "+c.getStart()+" "+c.getEnd()));
-                    }
+                    String[] columnNames = {"Students name", "Start of the lesson", "end of the lesson"};
+                    JTable table = new JTable(trueConstraint, columnNames);
+                    JScrollPane scrollPane = new JScrollPane(table);
+                    resultWindow.add(scrollPane);
                 }
                 else
-                    result.add(new Label(" Unsatisfiable"));
-                result.setLocationByPlatform(true);
-                result.setVisible(true);
+                    resultWindow.add(new Label(" Unsatisfiable"));
+                resultWindow.pack();
+
+                resultWindow.setLocationByPlatform(true);
+                resultWindow.setVisible(true);
             }
         });
         frame.add(generateSchedule,BorderLayout.SOUTH);

@@ -10,6 +10,8 @@ import org.sat4j.specs.TimeoutException;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -172,5 +174,22 @@ public class AllConstraints {
             c += constraint.getId()+ " ";
         }
         return c+"0 ";
+    }
+
+    public String[][] getTableOfResults(List<Constraint> results){
+        String [][] table = new String[results.size()][3];
+        int i = 0;
+        for (Constraint con : results) {
+            table[i][0] = con.getName();
+            table[i][1] = String.valueOf(con.getStart());
+            table[i][2] = String.valueOf(con.getEnd());
+            i++;
+        }
+        Arrays.sort(table, new Comparator<String[]>() {
+            public int compare(String[] o1, String[] o2) {
+                return Integer.valueOf(o1[1]).compareTo(Integer.valueOf(o2[1]));
+            }
+        });
+        return  table;
     }
 }
