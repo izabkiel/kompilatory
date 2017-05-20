@@ -13,11 +13,11 @@ public class GUI {
     private JFrame frame;
     private JButton addNewStudentButton;
     private static int count;
-    private String [] hours = {"8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","1","2","3","4","5","6","7"};
+    private String[] hours = {"8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "1", "2", "3", "4", "5", "6", "7"};
 
     private AllConstraints allConstraints = new AllConstraints();
-    public GUI()
-    {
+
+    public GUI() {
         count = 1;
     }
 
@@ -37,25 +37,24 @@ public class GUI {
                 JButton addConstraintToStudent = new JButton("Add preferences for student");
                 final JTextField studentNameField = new JTextField();
                 studentNameField.setName("user" + count);
-                studentNameField.setPreferredSize(new Dimension(100,20));
+                studentNameField.setPreferredSize(new Dimension(100, 20));
                 JPanel fieldsForConstraints = new JPanel(new FlowLayout());
                 fieldsForConstraints.add(new JLabel("Student name"));
                 fieldsForConstraints.add(studentNameField);
                 fieldsForConstraints.add(addConstraintToStudent);
-                studentConstraintPanel.add(fieldsForConstraints,BorderLayout.NORTH);
-               final JPanel concreteStudentConstraintsPanel = new JPanel(new GridLayout(0, 1, 2, 2));
+                studentConstraintPanel.add(fieldsForConstraints, BorderLayout.NORTH);
+                final JPanel concreteStudentConstraintsPanel = new JPanel(new GridLayout(0, 1, 2, 2));
                 addConstraintToStudent.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                        final String studentName  = studentNameField.getText();
-                        if(studentName.equals("")){
+                        final String studentName = studentNameField.getText();
+                        if (studentName.equals("")) {
                             JOptionPane.showMessageDialog(null, "Please enter the student name");
-                        }
-                        else {
+                        } else {
                             JPanel lessonTimeForStudentPanel = new JPanel(new FlowLayout());
                             final JComboBox startLesson = new JComboBox(hours);
                             final JComboBox endLesson = new JComboBox(hours);
-                            JButton addConstraintButton = new JButton("Add");
-                            lessonTimeForStudentPanel.add(new Label("Add prefered hours for "+studentName));
+                            final JButton addConstraintButton = new JButton("Add");
+                            lessonTimeForStudentPanel.add(new Label("Add prefered hours for " + studentName));
                             lessonTimeForStudentPanel.add(new Label("Start of lesson"));
                             lessonTimeForStudentPanel.add(startLesson);
                             lessonTimeForStudentPanel.add(new Label("End of lesson"));
@@ -63,13 +62,13 @@ public class GUI {
                             lessonTimeForStudentPanel.add(addConstraintButton);
                             addConstraintButton.addActionListener(new ActionListener() {
                                 public void actionPerformed(ActionEvent e) {
+                                    addConstraintButton.setEnabled(false);
                                     int start = Integer.parseInt(startLesson.getSelectedItem().toString());
                                     int end = Integer.parseInt(endLesson.getSelectedItem().toString());
-                                    if(end<=start){
+                                    if (end <= start) {
                                         JOptionPane.showMessageDialog(null, "Lesson cannot end before it's start");
-                                    }
-                                    else {
-                                        if(!allConstraints.checkIfConstraintExists(studentNameField.getText(),start,end)) {
+                                    } else {
+                                        if (!allConstraints.checkIfConstraintExists(studentNameField.getText(), start, end)) {
                                             allConstraints.addContraintToStudent(studentNameField.getText(), start, end, count);
                                             count++;
                                         }
@@ -96,15 +95,13 @@ public class GUI {
                 String[][] trueConstraint = allConstraints.getTableOfResults(allConstraints.solve());
                 JFrame resultWindow = new JFrame("Schedule");
                 resultWindow.setLayout(new GridLayout(0, 1, 2, 2));
-                //resultWindow.setSize(100,100);
 
-                if(trueConstraint!=null){
-                    String[] columnNames = {"Students name", "Start of the lesson", "end of the lesson"};
+                if (trueConstraint != null) {
+                    String[] columnNames = {"Students name", "Start of the lesson", "End of the lesson"};
                     JTable table = new JTable(trueConstraint, columnNames);
                     JScrollPane scrollPane = new JScrollPane(table);
                     resultWindow.add(scrollPane);
-                }
-                else
+                } else
                     resultWindow.add(new Label(" Unsatisfiable"));
                 resultWindow.pack();
 
@@ -112,11 +109,12 @@ public class GUI {
                 resultWindow.setVisible(true);
             }
         });
-        frame.add(generateSchedule,BorderLayout.SOUTH);
-        frame.add(addNewStudentButton,BorderLayout.NORTH);
-        frame.add(constraintsPanel,BorderLayout.CENTER);
-        frame.setSize(new Dimension(1000,500));
+        frame.add(generateSchedule, BorderLayout.SOUTH);
+        frame.add(addNewStudentButton, BorderLayout.NORTH);
+        frame.add(constraintsPanel, BorderLayout.CENTER);
+        frame.setSize(new Dimension(1000, 500));
         frame.setLocationByPlatform(true);
         frame.setVisible(true);
+
     }
 }
