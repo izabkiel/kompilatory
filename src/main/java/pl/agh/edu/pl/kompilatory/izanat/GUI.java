@@ -14,6 +14,7 @@ public class GUI {
     private JButton addNewStudentButton;
     private static int count;
     private String[] hours = {"8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "1", "2", "3", "4", "5", "6", "7"};
+    private String[] instructors = {"Darek", "Zdzisław", "James Bond"};
 
     private AllConstraints allConstraints = new AllConstraints();
 
@@ -53,7 +54,10 @@ public class GUI {
                             JPanel lessonTimeForStudentPanel = new JPanel(new FlowLayout());
                             final JComboBox startLesson = new JComboBox(hours);
                             final JComboBox endLesson = new JComboBox(hours);
+                            final JComboBox instructor = new JComboBox(instructors);
                             final JButton addConstraintButton = new JButton("Add");
+                            lessonTimeForStudentPanel.add(new Label("Instructor"));
+                            lessonTimeForStudentPanel.add(instructor);
                             lessonTimeForStudentPanel.add(new Label("Add prefered hours for " + studentName));
                             lessonTimeForStudentPanel.add(new Label("Start of lesson"));
                             lessonTimeForStudentPanel.add(startLesson);
