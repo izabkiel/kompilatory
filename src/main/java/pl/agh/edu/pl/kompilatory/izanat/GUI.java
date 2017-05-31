@@ -157,7 +157,6 @@ public class GUI {
                             lessonTimeForStudentPanel.add(addConstraintButton);
                             addConstraintButton.addActionListener(new ActionListener() {
                                 public void actionPerformed(ActionEvent e) {
-                                    addConstraintButton.setEnabled(false);
                                     int start = Integer.parseInt(startLesson.getSelectedItem().toString());
                                     int end = Integer.parseInt(endLesson.getSelectedItem().toString());
                                     if (end <= start) {
@@ -167,6 +166,7 @@ public class GUI {
                                             allConstraints.addConstraintToStudent(studentNameField.getText(), start, end, count);
                                             allConstraints.setInstructorForStudent(instructor.getSelectedItem().toString(),studentNameField.getText());
                                             count++;
+                                            addConstraintButton.setEnabled(false);
                                         }
                                     }
                                 }
@@ -195,7 +195,7 @@ public class GUI {
                 resultWindow.setLayout(new GridLayout(0, 1, 2, 2));
 
                 if (trueConstraint != null) {
-                    String[] columnNames = {"Students name", "Start of the lesson", "End of the lesson"};
+                    String[] columnNames = {"Students name", "Start of the lesson", "End of the lesson", "Instructor"};
                     JTable table = new JTable(trueConstraint, columnNames);
                     JScrollPane scrollPane = new JScrollPane(table);
                     resultWindow.add(scrollPane);

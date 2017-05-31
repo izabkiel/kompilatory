@@ -175,4 +175,8 @@ public class AllConstraints {
     public void setInstructorForStudent(String intructor, String student){
         allStudentsConstraints.getSpecificStudentByName(student).setInstructorName(intructor);
     }
+
+    public String getInstructorForStudent(String name){
+        return allStudentsConstraints.getSpecificStudentByName(name).getInstructorName();
+    }
 }

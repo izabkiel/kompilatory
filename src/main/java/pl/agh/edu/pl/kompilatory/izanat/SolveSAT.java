@@ -87,18 +87,22 @@ public class SolveSAT {
 
     public String[][] getTableOfResults(List<Constraint> results) {
         if (results != null) {
-            String[][] table = new String[results.size()][3];
+            String[][] table = new String[results.size()][4];
             int i = 0;
             for (Constraint con : results) {
                 table[i][0] = con.getName();
                 table[i][1] = String.valueOf(con.getStart());
                 table[i][2] = String.valueOf(con.getEnd());
+                table[i][3] = String.valueOf(allConstraints.getInstructorForStudent(con.getName()));
                 i++;
             }
             Arrays.sort(table, new Comparator<String[]>() {
                 public int compare(String[] o1, String[] o2) {
+                    int comp = o1[3].compareTo(o2[3]);
+                    if(comp != 0) return comp;
+                    else
                     return Integer.valueOf(o1[1]).compareTo(Integer.valueOf(o2[1]));
-                }
+                                    }
             });
             return table;
         } else return null;
