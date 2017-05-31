@@ -1,147 +1,87 @@
 package pl.agh.edu.pl.kompilatory.izanat;
 
-import org.sat4j.minisat.SolverFactory;
-import org.sat4j.reader.DimacsReader;
-import org.sat4j.reader.ParseFormatException;
-import org.sat4j.specs.ContradictionException;
-import org.sat4j.specs.IProblem;
-import org.sat4j.specs.ISolver;
-import org.sat4j.specs.TimeoutException;
-
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by Izochora on 2017-05-15.
  */
 public class AllConstraints {
-    List<SpecificSubjectAllConstraints> constraints = new ArrayList<SpecificSubjectAllConstraints>();
-    private int numberOfClouses = 0;
+    private AllInstructorsConstraints allInstructorsConstraints = new AllInstructorsConstraints();
+    private AllStudentsConstraints allStudentsConstraints = new AllStudentsConstraints();
+    private List<Constraint> allConstraints = new LinkedList<Constraint>();
     private int variables = 0;
-
-    public AllConstraints() {
-    }
+    private int numberOfClouses = 0;
 
 
     public void printAllConstraint() {
         System.out.println("------------");
-        for (SpecificSubjectAllConstraints s : constraints) {
-            for (Constraint c : s.getConstraints()) {
+        for (Constraint c : allConstraints) {
                 System.out.println(c.getName() + " " + c.getStart() + " " + c.getEnd() + " " + c.getId());
+
+        }
+    }
+    public AllInstructorsConstraints getAllInstructorsConstraints() {
+        return allInstructorsConstraints;
+    }
+
+    public void setAllInstructorsConstraints(AllInstructorsConstraints allInstructorsConstraints) {
+        this.allInstructorsConstraints = allInstructorsConstraints;
+    }
+
+    public AllStudentsConstraints getAllStudentsConstraints() {
+        return allStudentsConstraints;
+    }
+
+    public void setAllStudentsConstraints(AllStudentsConstraints allStudentsConstraints) {
+        this.allStudentsConstraints = allStudentsConstraints;
+    }
+
+    public List<Constraint> getAllConstraints() {
+        return allConstraints;
+    }
+
+    public void setAllConstraints(List<Constraint> allConstraints) {
+        this.allConstraints = allConstraints;
+    }
+
+    public void setAllConstraints(AllStudentsConstraints allStudentsConstraintsConstraints,AllInstructorsConstraints allInstructorsConstraints) {
+        for(InstructorConstraints cc : allInstructorsConstraints.getInstructorConstraints()){
+            for(Constraint c : cc.getConstraints()){
+                allConstraints.add(c);
+            }
+        }
+
+        for(SpecificStudentAllConstraints cc : allStudentsConstraints.getConstraints()){
+            for(Constraint c : cc.getConstraints()){
+                allConstraints.add(c);
             }
         }
     }
 
-    public void addContraintToStudent(String name, int start, int end, int id) {
-        if (checkIfStudentExists(name)) {
-            getSpecificStudentAllContraints(name).add(new Constraint(name, start, end, id));
-        } else {
-            SpecificSubjectAllConstraints s = new SpecificSubjectAllConstraints();
-            s.addConstrait(new Constraint(name, start, end, id));
-            constraints.add(s);
-        }
-    }
-
-    private List<Constraint> getSpecificStudentAllContraints(String name) {
-        for (SpecificSubjectAllConstraints s : constraints) {
-            if (s.getConstraints().get(0).getName().equals(name)) {
-                return s.getConstraints();
+    public Constraint getConstraintByID(int id){
+        for(Constraint c: allConstraints){
+            if(c.getId()==id){
+                return c;
             }
         }
         return null;
     }
 
-    private boolean checkIfStudentExists(String name) {
-        for (SpecificSubjectAllConstraints s : constraints) {
-            if (s.getConstraints().get(0).getName().equals(name))
-                return true;
-        }
-        return false;
-    }
-
-    public boolean checkIfConstraintExists(String name, int start, int end) {
-        for (SpecificSubjectAllConstraints s : constraints) {
-            if (s.checkIfConstraintExist(name, start, end))
-                return true;
-        }
-        return false;
-    }
-
-    public List<Constraint> solve() {
-        makeCondition();
-        ISolver solver = SolverFactory.newDefault();
-        solver.setTimeout(3600); // 1 hour timeout
-        DimacsReader reader = new DimacsReader(solver);
-        try {
-            IProblem problem = reader.parseInstance("elo.cnf");
-            if (problem.isSatisfiable()) {
-                System.out.println(" Satisfiable !");
-                String decodeMessage = reader.decode(problem.model());
-                return getTrueConstraints(decodeMessage);
-
-            } else {
-                System.out.println(" Unsatisfiable !");
-            }
-        } catch (FileNotFoundException e) {
-            System.out.print("File not fourd");
-        } catch (ParseFormatException e) {
-            System.out.println("ParseFormatException");
-            e.printStackTrace();
-        } catch (IOException e) {
-            System.out.print("IOExceptopn");
-        } catch (ContradictionException e) {
-            System.out.println(" Unsatisfiable ( trivial )!");
-        } catch (TimeoutException e) {
-            System.out.println(" Timeout , sorry !");
-        }
-        return null;
-    }
-
-    private List<Constraint> getTrueConstraints(String decodeMessage) {
-        List<Integer> list = getTrueConditions(decodeMessage);
-        List<Constraint> trueConstraints = new ArrayList<Constraint>();
-        for (int i : list) {
-            for (SpecificSubjectAllConstraints specificSubjectAllConstraints : constraints) {
-                if (specificSubjectAllConstraints.getConstraintById(i) != null) {
-                    trueConstraints.add(specificSubjectAllConstraints.getConstraintById(i));
-                }
+    public void generateSAT(){
+        System.out.println("Instructor constrains ");
+        for(InstructorConstraints i : allInstructorsConstraints.getInstructorConstraints()){
+            for(Constraint c : i.getConstraints()){
+                System.out.println(c.getName()+ " "+c.getStart()+" "+c.getEnd()+" "+c.getId());
             }
         }
-        return trueConstraints;
-    }
-
-    private List<Integer> getTrueConditions(String decodeMessage) {
-        List<Integer> trueConditions = new ArrayList<Integer>();
-        System.out.println(decodeMessage);
-        for (int i = 0; i < decodeMessage.length(); i++) {
-            if (decodeMessage.charAt(i) == '-')
-                i = i + 2;
-            else {
-                trueConditions.add(Integer.parseInt(decodeMessage.charAt(i) + ""));
-                i++;
-            }
-        }
-        return trueConditions;
-    }
-
-    private void makeCondition() {
-        numberOfClouses = constraints.size();
-        String c = "";
-        for (SpecificSubjectAllConstraints s : constraints) {
-            variables += s.getConstraints().size();
-        }
-        for (SpecificSubjectAllConstraints s : constraints) {
-            c = c + specificSubjectCondition(s);
-        }
-
-        for (int i = 0; i < constraints.size(); i++) {
-            for (int j = i + 1; j < constraints.size(); j++)
-                c = c + checkOverlappingTime(constraints.get(i).getConstraints(), constraints.get(j).getConstraints());
-        }
-        writeToFile("p cnf " + variables + " " + numberOfClouses + "\n" + c);
+        allStudentsConstraints.makeConditionForStudents();
+        variables = allStudentsConstraints.getVariables() + allInstructorsConstraints.getVariables();
+        StringBuilder c = generateConditionForInstructors();
+        numberOfClouses += allStudentsConstraints.getNumberOfClouses() + allInstructorsConstraints.getNumberOfClouses();
+        writeToFile("p cnf " + variables + " " + numberOfClouses + "\n" + allStudentsConstraints.studentCNF +allInstructorsConstraints.c + c);
+        allStudentsConstraints.setStudentCNF(new StringBuilder(""));
+        numberOfClouses = 0;
     }
 
     private void writeToFile(String c) {
@@ -152,6 +92,53 @@ public class AllConstraints {
         } catch (IOException e) {
             System.out.print("nie zapisano do pliku");
         }
+    }
+
+    private StringBuilder generateConditionForInstructors(){
+        StringBuilder condition = new StringBuilder("");
+        for(InstructorConstraints c: allInstructorsConstraints.getInstructorConstraints()){
+            condition.append(genarateConditionForInstructorsStudent(c.getConstraints().get(0).getName()));
+        }
+        return condition;
+    }
+
+    private StringBuilder genarateConditionForInstructorsStudent(String instructorName){
+        StringBuilder condition = new StringBuilder("");
+        List<Constraint> instructorConstraints = allInstructorsConstraints.getSpecificInstructorAllContraints(instructorName);
+        List<SpecificStudentAllConstraints> instructorStudentsContraints = new LinkedList<SpecificStudentAllConstraints>();
+        for(SpecificStudentAllConstraints s: allStudentsConstraints.getConstraints()){
+            if(s.getInstructorName().equals(instructorName)){
+                instructorStudentsContraints.add(s);
+            }
+        }
+
+        for (int i = 0; i < instructorStudentsContraints.size(); i++) {
+            for (int j = i + 1; j < instructorStudentsContraints.size(); j++)
+                condition.append(checkOverlappingTime(instructorStudentsContraints.get(i).getConstraints(), instructorStudentsContraints.get(j).getConstraints()));
+        }
+
+        for(SpecificStudentAllConstraints s: instructorStudentsContraints){
+             condition.append(checkIncludingTime(s.getConstraints(),instructorConstraints));
+        }
+        return condition;
+
+    }
+
+    private String checkIncludingTime(List<Constraint> studentContraints, List<Constraint> instructorConstraints) {
+        String c = "";
+        for (Constraint s : studentContraints) {
+            boolean add = true;
+            for (Constraint i : instructorConstraints) {
+                if (!(s.getStart()<i.getStart() || s.getEnd()>i.getEnd())) {
+                   add = false;
+                }
+            }
+            if(add){
+                c = c + "-" + s.getId() + " 0 ";
+                numberOfClouses++;
+            }
+        }
+        return c;
     }
 
     private String checkOverlappingTime(List<Constraint> a, List<Constraint> b) {
@@ -166,32 +153,26 @@ public class AllConstraints {
         }
         return c;
     }
-
-    private String specificSubjectCondition(SpecificSubjectAllConstraints s) {
-        String c = "";
-        for (Constraint constraint : s.getConstraints()) {
-            c += constraint.getId() + " ";
-        }
-        return c + "0 ";
+    public void addConstraintToStudent(String name, int start, int end, int id) {
+        allStudentsConstraints.addContraintToStudent(name,start,end,id);
+        allConstraints.add(new Constraint(name,start,end,id));
     }
 
-    public String[][] getTableOfResults(List<Constraint> results) {
-        if (results != null) {
-            String[][] table = new String[results.size()][3];
-            int i = 0;
-            for (Constraint con : results) {
-                table[i][0] = con.getName();
-                table[i][1] = String.valueOf(con.getStart());
-                table[i][2] = String.valueOf(con.getEnd());
-                i++;
+    public void addConstraintToInstructor(String name, int start, int end, int id){
+        allInstructorsConstraints.addContraintToInstructor(name,start,end,id);
+        allConstraints.add(new Constraint(name,start,end,id));
+    }
+
+    public boolean checkIfConstraintExists(String name, int start, int end) {
+        for(Constraint c:allConstraints){
+            if(c.getName().equals(name) && c.getEnd() == end && c.getStart()==start){
+                return true;
             }
-            Arrays.sort(table, new Comparator<String[]>() {
-                public int compare(String[] o1, String[] o2) {
-                    return Integer.valueOf(o1[1]).compareTo(Integer.valueOf(o2[1]));
-                }
-            });
-            return table;
-        } else return null;
+        }
+        return false;
     }
 
+    public void setInstructorForStudent(String intructor, String student){
+        allStudentsConstraints.getSpecificStudentByName(student).setInstructorName(intructor);
+    }
 }
