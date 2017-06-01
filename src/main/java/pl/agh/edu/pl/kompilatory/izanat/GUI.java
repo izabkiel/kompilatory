@@ -14,7 +14,6 @@ public class GUI {
     private static int count;
     private String[] hours = {"8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "1", "2", "3", "4", "5", "6", "7"};
     private LinkedList<String> instructorsNames = new LinkedList<String>();
-    //private String[] instructors = {"Paweł", "Zdzisław", "James Bond"};
     private AllConstraints allConstraints = new AllConstraints();
     private SolveSAT solveSAT = new SolveSAT();
     private final JPanel studentPanel = new JPanel(new BorderLayout());
@@ -36,8 +35,12 @@ public class GUI {
         studentConstraintsDisplay();
         instructorConstraintDispla();
 
-        tabbedPane.addTab("Set student constraints", icon, studentPanel);
+        JScrollPane instructorScrollPane = new JScrollPane();
+        JScrollPane studentScrollPane = new JScrollPane();
+
         tabbedPane.addTab("Set instructor constraints", icon,instructorPanel);
+        tabbedPane.addTab("Set student constraints", icon, studentPanel);
+
         frame.add(tabbedPane,BorderLayout.NORTH);
         frame.setSize(new Dimension(1000, 500));
         frame.setLocationByPlatform(true);
@@ -60,7 +63,7 @@ public class GUI {
                 instructorNameField.setName("instructor" + count);
                 instructorNameField.setPreferredSize(new Dimension(100, 20));
                 JPanel fieldsForConstraints = new JPanel(new FlowLayout());
-                fieldsForConstraints.add(new JLabel("Instructor name"));
+                fieldsForConstraints.add(new JLabel("Instructor's name"));
                 fieldsForConstraints.add(instructorNameField);
                 fieldsForConstraints.add(addConstraintToInstructor);
                 instructorConstraintPanel.add(fieldsForConstraints, BorderLayout.NORTH);
@@ -69,16 +72,16 @@ public class GUI {
                     public void actionPerformed(ActionEvent e) {
                         final String instructorName = instructorNameField.getText();
                         if (instructorName.equals("")) {
-                            JOptionPane.showMessageDialog(null, "Please enter the instructor name");
+                            JOptionPane.showMessageDialog(null, "Please enter the instructor's name");
                         } else {
                             JPanel lessonTimeForStudentPanel = new JPanel(new FlowLayout());
                             final JComboBox startLesson = new JComboBox(hours);
                             final JComboBox endLesson = new JComboBox(hours);
                             final JButton addConstraintButton = new JButton("Add");
-                            lessonTimeForStudentPanel.add(new Label("Add prefered hours for " + instructorName));
-                            lessonTimeForStudentPanel.add(new Label("Start of work"));
+                            lessonTimeForStudentPanel.add(new Label("Add work hours for " + instructorName));
+                            lessonTimeForStudentPanel.add(new Label("Start at"));
                             lessonTimeForStudentPanel.add(startLesson);
-                            lessonTimeForStudentPanel.add(new Label("End of work"));
+                            lessonTimeForStudentPanel.add(new Label("End at"));
                             lessonTimeForStudentPanel.add(endLesson);
                             lessonTimeForStudentPanel.add(addConstraintButton);
                             if(!instructorsNames.contains(instructorNameField.getText().toString())){
@@ -86,7 +89,7 @@ public class GUI {
                             }
                             addConstraintButton.addActionListener(new ActionListener() {
                                 public void actionPerformed(ActionEvent e) {
-                                    addConstraintButton.setEnabled(false);
+
                                     int start = Integer.parseInt(startLesson.getSelectedItem().toString());
                                     int end = Integer.parseInt(endLesson.getSelectedItem().toString());
                                     if (end <= start) {
@@ -96,6 +99,7 @@ public class GUI {
                                             allConstraints.addConstraintToInstructor(instructorNameField.getText(), start, end, count);
                                             //allConstraints.setInstructorForStudent("paweł",studentNameField.getText());
                                             count++;
+                                            addConstraintButton.setEnabled(false);
                                         }
                                     }
                                 }
