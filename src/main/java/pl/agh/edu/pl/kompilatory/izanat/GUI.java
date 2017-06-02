@@ -95,12 +95,12 @@ public class GUI {
                                     if (end <= start) {
                                         JOptionPane.showMessageDialog(null, "Lesson cannot end before it's start");
                                     } else {
-                                        if (!allConstraints.checkIfConstraintExists(instructorNameField.getText(), start, end)) {
+/*                                        if (!allConstraints.checkIfConstraintExists(instructorNameField.getText(), start, end)) {
                                             allConstraints.addConstraintToInstructor(instructorNameField.getText(), start, end, count);
                                             //allConstraints.setInstructorForStudent("paweł",studentNameField.getText());
                                             count++;
                                             addConstraintButton.setEnabled(false);
-                                        }
+                                        }*/
                                     }
                                 }
                             });
@@ -168,12 +168,12 @@ public class GUI {
                                     if (end <= start) {
                                         JOptionPane.showMessageDialog(null, "Lesson cannot end before it's start");
                                     } else {
-                                        if (!allConstraints.checkIfConstraintExists(studentNameField.getText(), start, end)) {
+     /*                                   if (!allConstraints.checkIfConstraintExists(studentNameField.getText(), start, end)) {
                                             allConstraints.addConstraintToStudent(studentNameField.getText(), start, end, count);
                                             allConstraints.setInstructorForStudent(instructor.getSelectedItem().toString(),studentNameField.getText());
                                             count++;
                                             addConstraintButton.setEnabled(false);
-                                        }
+                                        }*/
                                     }
                                 }
                             });

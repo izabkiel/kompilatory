@@ -11,10 +11,7 @@ import org.sat4j.specs.TimeoutException;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by Izochora on 2017-05-25.
@@ -77,18 +74,6 @@ public class AllStudentsConstraints {
         }*/
     }
 
-    private String checkOverlappingTime(List<Constraint> a, List<Constraint> b) {
-        String c = "";
-        for (Constraint g : a) {
-            for (Constraint m : b) {
-                if (!(g.getEnd() <= m.getStart() || m.getEnd() <= g.getStart())) {
-                    c = c + "-" + g.getId() + " -" + m.getId() + " 0 ";
-                    numberOfClouses++;
-                }
-            }
-        }
-        return c;
-    }
 
     private void specificStudentCondition(SpecificStudentAllConstraints s) {
         for (Constraint constraint : s.getConstraints()) {
@@ -97,7 +82,7 @@ public class AllStudentsConstraints {
         studentCNF.append("0 ");
     }
 
-    public void addContraintToStudent(String name, int start, int end, int id) {
+    public void addContraintToStudent(String name, Date start, Date end, int id) {
         if (checkIfStudentExists(name)) {
             getSpecificStudentAllContraints(name).add(new Constraint(name, start, end, id));
         } else {

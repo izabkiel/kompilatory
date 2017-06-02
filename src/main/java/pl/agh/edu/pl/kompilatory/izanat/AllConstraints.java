@@ -129,7 +129,7 @@ public class AllConstraints {
         for (Constraint s : studentContraints) {
             boolean add = true;
             for (Constraint i : instructorConstraints) {
-                if (!(s.getStart()<i.getStart() || s.getEnd()>i.getEnd())) {
+                if (!(s.getStart().before(i.getStart()) || s.getEnd().after(i.getEnd()))) {
                    add = false;
                 }
             }
@@ -145,7 +145,7 @@ public class AllConstraints {
         String c = "";
         for (Constraint g : a) {
             for (Constraint m : b) {
-                if (!(g.getEnd() <= m.getStart() || m.getEnd() <= g.getStart())) {
+                if (!(g.getEnd().before(m.getStart()) || g.getEnd().equals(m.getStart()) || m.getEnd().equals(g.getStart()) || m.getEnd().before(g.getStart()))) {
                     c = c + "-" + g.getId() + " -" + m.getId() + " 0 ";
                     numberOfClouses++;
                 }
@@ -153,17 +153,17 @@ public class AllConstraints {
         }
         return c;
     }
-    public void addConstraintToStudent(String name, int start, int end, int id) {
+    public void addConstraintToStudent(String name, Date start, Date end, int id) {
         allStudentsConstraints.addContraintToStudent(name,start,end,id);
         allConstraints.add(new Constraint(name,start,end,id));
     }
 
-    public void addConstraintToInstructor(String name, int start, int end, int id){
+    public void addConstraintToInstructor(String name, Date start, Date end, int id){
         allInstructorsConstraints.addContraintToInstructor(name,start,end,id);
         allConstraints.add(new Constraint(name,start,end,id));
     }
 
-    public boolean checkIfConstraintExists(String name, int start, int end) {
+    public boolean checkIfConstraintExists(String name, Date start, Date end) {
         for(Constraint c:allConstraints){
             if(c.getName().equals(name) && c.getEnd() == end && c.getStart()==start){
                 return true;

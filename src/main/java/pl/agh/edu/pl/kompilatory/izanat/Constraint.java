@@ -1,12 +1,14 @@
 package pl.agh.edu.pl.kompilatory.izanat;
 
+import java.util.Date;
+
 /**
  * Created by Izochora on 2017-05-15.
  */
 public class Constraint {
     private String name;
-    private int start;
-    private int end;
+    private Date start;
+    private Date end;
     private int id;
 
     public int getId() {
@@ -25,23 +27,23 @@ public class Constraint {
         this.name = name;
     }
 
-    public int getStart() {
+    public Date getStart() {
         return start;
     }
 
-    public void setStart(int start) {
+    public void setStart(Date start) {
         this.start = start;
     }
 
-    public int getEnd() {
+    public Date getEnd() {
         return end;
     }
 
-    public void setEnd(int end) {
+    public void setEnd(Date end) {
         this.end = end;
     }
 
-    public Constraint(String name, int start, int end, int id) {
+    public Constraint(String name, Date start, Date end, int id) {
         this.name = name;
         this.start = start;
         this.end = end;

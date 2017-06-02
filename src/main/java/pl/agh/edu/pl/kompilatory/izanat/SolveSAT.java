@@ -42,6 +42,10 @@ public class SolveSAT {
             IProblem problem = reader.parseInstance("elo.cnf");
             if (problem.isSatisfiable()) {
                 String decodeMessage = reader.decode(problem.model());
+                List<Constraint> c  = getTrueConstraints(decodeMessage);
+                for(Constraint i :c){
+                    System.out.println("Student name "+i.getName() +" start "+i.getStart()+" end "+i.getEnd() +" instructor "+allConstraints.getInstructorForStudent(i.getName()));
+                }
                 return getTrueConstraints(decodeMessage);
 
             }
