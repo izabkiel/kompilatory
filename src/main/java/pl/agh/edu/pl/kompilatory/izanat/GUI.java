@@ -4,7 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.LinkedList;
+import java.io.File;
+import java.util.*;
+import java.util.List;
 
 /**
  * Created by Izochora on 2017-05-18.
@@ -18,6 +20,9 @@ public class GUI {
     private SolveSAT solveSAT = new SolveSAT();
     private final JPanel studentPanel = new JPanel(new BorderLayout());
     private final JPanel instructorPanel = new JPanel(new BorderLayout());
+    private String instructorPath = "";
+    private String studentPath = "";
+    private boolean readFromFile=false;
 
     public GUI() {
         count = 1;
@@ -33,99 +38,132 @@ public class GUI {
         ImageIcon icon = createImageIcon("images/middle.gif");
 
         studentConstraintsDisplay();
-        instructorConstraintDispla();
+        instructorConstraintDisplay();
 
         JScrollPane instructorScrollPane = new JScrollPane();
         JScrollPane studentScrollPane = new JScrollPane();
 
-        tabbedPane.addTab("Set instructor constraints", icon,instructorPanel);
+        tabbedPane.addTab("Set instructor constraints", icon, instructorPanel);
         tabbedPane.addTab("Set student constraints", icon, studentPanel);
 
-        frame.add(tabbedPane,BorderLayout.NORTH);
+        frame.add(tabbedPane, BorderLayout.NORTH);
         frame.setSize(new Dimension(1000, 500));
         frame.setLocationByPlatform(true);
         frame.setVisible(true);
 
     }
 
-    private void instructorConstraintDispla(){
+    private void instructorConstraintDisplay() {
+        final JButton getConstraintsFromFileButton = new JButton("Load file with instructor constraints");
+        final JFileChooser fc = new JFileChooser();
+
         JButton addNewInstructorButton = new JButton("Add new instructor and his preferences");
         JPanel addNewInstructorPanel = new JPanel();
         addNewInstructorPanel.add(addNewInstructorButton);
         GridLayout layoutForConstraints = new GridLayout(0, 1, 2, 2);
         final JPanel constraintsPanel = new JPanel(layoutForConstraints);
-
-        addNewInstructorButton.addActionListener(new ActionListener() {
+        addNewInstructorPanel.add(getConstraintsFromFileButton);
+        getConstraintsFromFileButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                final JPanel instructorConstraintPanel = new JPanel(new BorderLayout());
-                JButton addConstraintToInstructor = new JButton("Add working hours for instructor");
-                final JTextField instructorNameField = new JTextField();
-                instructorNameField.setName("instructor" + count);
-                instructorNameField.setPreferredSize(new Dimension(100, 20));
-                JPanel fieldsForConstraints = new JPanel(new FlowLayout());
-                fieldsForConstraints.add(new JLabel("Instructor's name"));
-                fieldsForConstraints.add(instructorNameField);
-                fieldsForConstraints.add(addConstraintToInstructor);
-                instructorConstraintPanel.add(fieldsForConstraints, BorderLayout.NORTH);
-                final JPanel concreteInstructorConstraintsPanel = new JPanel(new GridLayout(0, 1, 2, 2));
-                addConstraintToInstructor.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent e) {
-                        final String instructorName = instructorNameField.getText();
-                        if (instructorName.equals("")) {
-                            JOptionPane.showMessageDialog(null, "Please enter the instructor's name");
-                        } else {
-                            JPanel lessonTimeForStudentPanel = new JPanel(new FlowLayout());
-                            final JComboBox startLesson = new JComboBox(hours);
-                            final JComboBox endLesson = new JComboBox(hours);
-                            final JButton addConstraintButton = new JButton("Add");
-                            lessonTimeForStudentPanel.add(new Label("Add work hours for " + instructorName));
-                            lessonTimeForStudentPanel.add(new Label("Start at"));
-                            lessonTimeForStudentPanel.add(startLesson);
-                            lessonTimeForStudentPanel.add(new Label("End at"));
-                            lessonTimeForStudentPanel.add(endLesson);
-                            lessonTimeForStudentPanel.add(addConstraintButton);
-                            if(!instructorsNames.contains(instructorNameField.getText().toString())){
-                                instructorsNames.add(instructorNameField.getText().toString());
-                            }
-                            addConstraintButton.addActionListener(new ActionListener() {
-                                public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == getConstraintsFromFileButton) {
+                    int returnVal = fc.showOpenDialog(constraintsPanel);
 
-                                    int start = Integer.parseInt(startLesson.getSelectedItem().toString());
-                                    int end = Integer.parseInt(endLesson.getSelectedItem().toString());
-                                    if (end <= start) {
-                                        JOptionPane.showMessageDialog(null, "Lesson cannot end before it's start");
-                                    } else {
+                    if (returnVal == JFileChooser.APPROVE_OPTION) {
+                        File file = fc.getSelectedFile();
+                        instructorPath = file.getAbsolutePath();
+                        readFromFile=true;
+                    }
+                }
+            }});
+        addNewInstructorButton.addActionListener(new
+            ActionListener() {
+                public void actionPerformed (ActionEvent e){
+                    final JPanel instructorConstraintPanel = new JPanel(new BorderLayout());
+                    JButton addConstraintToInstructor = new JButton("Add working hours for instructor");
+                    final JTextField instructorNameField = new JTextField();
+                    instructorNameField.setName("instructor" + count);
+                    instructorNameField.setPreferredSize(new Dimension(100, 20));
+                    JPanel fieldsForConstraints = new JPanel(new FlowLayout());
+                    fieldsForConstraints.add(new JLabel("Instructor's name"));
+                    fieldsForConstraints.add(instructorNameField);
+                    fieldsForConstraints.add(addConstraintToInstructor);
+                    instructorConstraintPanel.add(fieldsForConstraints, BorderLayout.NORTH);
+                    final JPanel concreteInstructorConstraintsPanel = new JPanel(new GridLayout(0, 1, 2, 2));
+                    addConstraintToInstructor.addActionListener(new ActionListener() {
+                        public void actionPerformed(ActionEvent e) {
+                            final String instructorName = instructorNameField.getText();
+                            if (instructorName.equals("")) {
+                                JOptionPane.showMessageDialog(null, "Please enter the instructor's name");
+                            } else {
+                                JPanel lessonTimeForStudentPanel = new JPanel(new FlowLayout());
+                                final JComboBox startLesson = new JComboBox(hours);
+                                final JComboBox endLesson = new JComboBox(hours);
+                                final JButton addConstraintButton = new JButton("Add");
+                                lessonTimeForStudentPanel.add(new Label("Add work hours for " + instructorName));
+                                lessonTimeForStudentPanel.add(new Label("Start at"));
+                                lessonTimeForStudentPanel.add(startLesson);
+                                lessonTimeForStudentPanel.add(new Label("End at"));
+                                lessonTimeForStudentPanel.add(endLesson);
+                                lessonTimeForStudentPanel.add(addConstraintButton);
+                                if (!instructorsNames.contains(instructorNameField.getText().toString())) {
+                                    instructorsNames.add(instructorNameField.getText().toString());
+                                }
+                                addConstraintButton.addActionListener(new ActionListener() {
+                                    public void actionPerformed(ActionEvent e) {
+
+                                        int start = Integer.parseInt(startLesson.getSelectedItem().toString());
+                                        int end = Integer.parseInt(endLesson.getSelectedItem().toString());
+                                        if (end <= start) {
+                                            JOptionPane.showMessageDialog(null, "Lesson cannot end before it's start");
+                                        } else {
 /*                                        if (!allConstraints.checkIfConstraintExists(instructorNameField.getText(), start, end)) {
                                             allConstraints.addConstraintToInstructor(instructorNameField.getText(), start, end, count);
                                             //allConstraints.setInstructorForStudent("paweł",studentNameField.getText());
                                             count++;
                                             addConstraintButton.setEnabled(false);
                                         }*/
+                                        }
                                     }
-                                }
-                            });
-                            concreteInstructorConstraintsPanel.add(lessonTimeForStudentPanel);
-                            instructorConstraintPanel.add(concreteInstructorConstraintsPanel, BorderLayout.CENTER);
-                            frame.validate();
-                            frame.repaint();
+                                });
+                                concreteInstructorConstraintsPanel.add(lessonTimeForStudentPanel);
+                                instructorConstraintPanel.add(concreteInstructorConstraintsPanel, BorderLayout.CENTER);
+                                frame.validate();
+                                frame.repaint();
+                            }
                         }
-                    }
-                });
-                constraintsPanel.add(instructorConstraintPanel);
-                instructorPanel.add(constraintsPanel);
-                frame.validate();
-                frame.repaint();
-            }
-        });
+                    });
+                    constraintsPanel.add(instructorConstraintPanel);
+                    instructorPanel.add(constraintsPanel);
+                    frame.validate();
+                    frame.repaint();
+                }
+            });
 
         instructorPanel.add(addNewInstructorPanel,BorderLayout.NORTH);
-    }
-    private void studentConstraintsDisplay(){
+        }
+
+    private void studentConstraintsDisplay() {
         GridLayout layoutForConstraints = new GridLayout(0, 1, 2, 2);
         final JPanel constraintsPanel = new JPanel(layoutForConstraints);
         JButton addNewStudentButton = new JButton("Add new Student and his preferences");
         JButton generateSchedule = new JButton("Generate schedule");
         studentPanel.setVisible(true);
+        final JButton getStudentConstraintsFromFileButton = new JButton("Load file with student's constraints");
+        final JFileChooser fc = new JFileChooser();
+        studentPanel.add(getStudentConstraintsFromFileButton);
+        getStudentConstraintsFromFileButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == getStudentConstraintsFromFileButton) {
+                    int returnVal = fc.showOpenDialog(constraintsPanel);
+
+                    if (returnVal == JFileChooser.APPROVE_OPTION) {
+                        File file = fc.getSelectedFile();
+                        studentPath = file.getAbsolutePath();
+                        System.out.println(file.getAbsolutePath());
+                        readFromFile=true;
+                    }
+                }
+            }});
 
         addNewStudentButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
@@ -193,10 +231,20 @@ public class GUI {
 
         generateSchedule.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ea) {
-                allConstraints.generateSAT();
-                allConstraints.printAllConstraint();
-                solveSAT.setAllConstraints(allConstraints);
-                String[][] trueConstraint = solveSAT.getTableOfResults(solveSAT.solve());
+
+                List<Constraint> solution;
+                if(readFromFile){
+                    CreateConstraintsFromFiles createConstraintsFromFiles = new CreateConstraintsFromFiles(instructorPath, studentPath);
+                    solution = createConstraintsFromFiles.solveSAT();
+                    solveSAT = createConstraintsFromFiles.getSolveSAT();
+                }
+                else{
+                    allConstraints.generateSAT();
+                    allConstraints.printAllConstraint();
+                    solveSAT.setAllConstraints(allConstraints);
+                     solution = solveSAT.solve();
+                }
+                String[][] trueConstraint = solveSAT.getTableOfResults(solution);
                 JFrame resultWindow = new JFrame("Schedule");
                 resultWindow.setLayout(new GridLayout(0, 1, 2, 2));
 

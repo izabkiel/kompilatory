@@ -10,10 +10,9 @@ import org.sat4j.specs.TimeoutException;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.*;
 
 /**
  * Created by Izochora on 2017-05-25.
@@ -21,12 +20,15 @@ import java.util.List;
 public class SolveSAT {
     AllConstraints allConstraints;
 
-    SolveSAT(){
+    SolveSAT() {
 
     }
+
     public AllConstraints getAllConstraints() {
         return allConstraints;
     }
+
+
 
     public void setAllConstraints(AllConstraints allConstraints) {
         this.allConstraints = allConstraints;
@@ -42,9 +44,9 @@ public class SolveSAT {
             IProblem problem = reader.parseInstance("elo.cnf");
             if (problem.isSatisfiable()) {
                 String decodeMessage = reader.decode(problem.model());
-                List<Constraint> c  = getTrueConstraints(decodeMessage);
-                for(Constraint i :c){
-                    System.out.println("Student name "+i.getName() +" start "+i.getStart()+" end "+i.getEnd() +" instructor "+allConstraints.getInstructorForStudent(i.getName()));
+                List<Constraint> c = getTrueConstraints(decodeMessage);
+                for (Constraint i : c) {
+                    System.out.println("Student name " + i.getName() + " start " + i.getStart() + " end " + i.getEnd() + " instructor " + allConstraints.getInstructorForStudent(i.getName()));
                 }
                 return getTrueConstraints(decodeMessage);
 
@@ -68,8 +70,8 @@ public class SolveSAT {
         List<Integer> list = getTrueConditions(decodeMessage);
         List<Constraint> trueConstraints = new ArrayList<Constraint>();
         for (int i : list) {
-                if (allConstraints.getConstraintByID(i) != null) {
-                    trueConstraints.add(allConstraints.getConstraintByID(i));
+            if (allConstraints.getConstraintByID(i) != null) {
+                trueConstraints.add(allConstraints.getConstraintByID(i));
             }
         }
         return trueConstraints;
@@ -103,10 +105,14 @@ public class SolveSAT {
             Arrays.sort(table, new Comparator<String[]>() {
                 public int compare(String[] o1, String[] o2) {
                     int comp = o1[3].compareTo(o2[3]);
-                    if(comp != 0) return comp;
-                    else
-                    return Integer.valueOf(o1[1]).compareTo(Integer.valueOf(o2[1]));
-                                    }
+                    if (comp != 0) return comp;
+                    else{
+                        LocalDateTime o1Date = LocalDateTime.parse(o1[1]);
+                        LocalDateTime o2Date = LocalDateTime.parse(o2[1]);
+                        return o1Date.compareTo(o2Date);
+                    }
+
+                }
             });
             return table;
         } else return null;

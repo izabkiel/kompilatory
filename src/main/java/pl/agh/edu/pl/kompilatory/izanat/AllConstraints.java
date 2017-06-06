@@ -1,6 +1,7 @@
 package pl.agh.edu.pl.kompilatory.izanat;
 
 import java.io.*;
+import java.time.LocalDateTime;
 import java.util.*;
 
 /**
@@ -129,7 +130,7 @@ public class AllConstraints {
         for (Constraint s : studentContraints) {
             boolean add = true;
             for (Constraint i : instructorConstraints) {
-                if (!(s.getStart().before(i.getStart()) || s.getEnd().after(i.getEnd()))) {
+                if (!(s.getStart().isBefore(i.getStart()) || s.getEnd().isAfter(i.getEnd()))) {
                    add = false;
                 }
             }
@@ -145,7 +146,7 @@ public class AllConstraints {
         String c = "";
         for (Constraint g : a) {
             for (Constraint m : b) {
-                if (!(g.getEnd().before(m.getStart()) || g.getEnd().equals(m.getStart()) || m.getEnd().equals(g.getStart()) || m.getEnd().before(g.getStart()))) {
+                if (!(g.getEnd().isBefore(m.getStart()) || g.getEnd().equals(m.getStart()) || m.getEnd().equals(g.getStart()) || m.getEnd().isBefore(g.getStart()))) {
                     c = c + "-" + g.getId() + " -" + m.getId() + " 0 ";
                     numberOfClouses++;
                 }
@@ -153,19 +154,19 @@ public class AllConstraints {
         }
         return c;
     }
-    public void addConstraintToStudent(String name, Date start, Date end, int id) {
+    public void addConstraintToStudent(String name, LocalDateTime start, LocalDateTime end, int id) {
         allStudentsConstraints.addContraintToStudent(name,start,end,id);
         allConstraints.add(new Constraint(name,start,end,id));
     }
 
-    public void addConstraintToInstructor(String name, Date start, Date end, int id){
+    public void addConstraintToInstructor(String name, LocalDateTime start, LocalDateTime end, int id){
         allInstructorsConstraints.addContraintToInstructor(name,start,end,id);
         allConstraints.add(new Constraint(name,start,end,id));
     }
 
-    public boolean checkIfConstraintExists(String name, Date start, Date end) {
+    public boolean checkIfConstraintExists(String name, LocalDateTime start, LocalDateTime end) {
         for(Constraint c:allConstraints){
-            if(c.getName().equals(name) && c.getEnd() == end && c.getStart()==start){
+            if(c.getName().equals(name) && c.getEnd().equals(end) && c.getStart().equals(start)){
                 return true;
             }
         }
@@ -178,5 +179,6 @@ public class AllConstraints {
 
     public String getInstructorForStudent(String name){
         return allStudentsConstraints.getSpecificStudentByName(name).getInstructorName();
+
     }
 }

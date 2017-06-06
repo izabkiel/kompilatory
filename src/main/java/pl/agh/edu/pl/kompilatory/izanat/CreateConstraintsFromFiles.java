@@ -7,7 +7,10 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Izochora on 2017-06-02.
@@ -15,16 +18,30 @@ import java.util.Date;
 public class CreateConstraintsFromFiles {
 
 
+    private String instructorPath;
+    private String studentPath;
+
     private AllConstraints allConstraints = new AllConstraints();
+
+    public SolveSAT getSolveSAT() {
+        return solveSAT;
+    }
+
     private SolveSAT solveSAT = new SolveSAT();
     private int id = 0;
 
-    public void solveSAT(){
-        addInstructorsConstraints("instruktorzy.csv");
-        addStudentsContraints("students.csv");
+    public CreateConstraintsFromFiles(String instructorPath, String studentPath) {
+        this.instructorPath = instructorPath;
+        this.studentPath = studentPath;
+    }
+
+    public List<Constraint> solveSAT(){
+        addInstructorsConstraints(instructorPath);
+        addStudentsContraints(studentPath);
+
         allConstraints.generateSAT();
         solveSAT.setAllConstraints(allConstraints);
-        solveSAT.solve();
+        return solveSAT.solve();
 
     }
 
@@ -35,28 +52,24 @@ public class CreateConstraintsFromFiles {
         String cvsSplitBy = ";";
 
 
-
-
         try {
             br = new BufferedReader(new FileReader(csvFile));
             br.readLine();
 
-            DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
             while ((line = br.readLine()) != null) {
                 String[] instructorConstraints = line.split(cvsSplitBy);
                 String startString = instructorConstraints[1];
-                Date start = format.parse(startString);
+                LocalDateTime start = LocalDateTime.parse(startString, formatter);
                 String endString = instructorConstraints[2];
-                Date end = format.parse(endString);
+                LocalDateTime end = LocalDateTime.parse(endString, formatter);
                 allConstraints.addConstraintToInstructor(instructorConstraints[0],start, end,++id);
             }
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
             e.printStackTrace();
         } finally {
             if (br != null) {
@@ -78,14 +91,14 @@ public class CreateConstraintsFromFiles {
         try {
             br = new BufferedReader(new FileReader(csvFile));
             br.readLine();
-            DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
             while ((line = br.readLine()) != null) {
                 String[] instructorConstraints = line.split(cvsSplitBy);
                 String startString = instructorConstraints[1];
-                Date start = format.parse(startString);
+                LocalDateTime start = LocalDateTime.parse(startString, formatter);
                 String endString = instructorConstraints[2];
-                Date end = format.parse(endString);
+                LocalDateTime end = LocalDateTime.parse(endString, formatter);
                 allConstraints.addConstraintToStudent(instructorConstraints[0],start, end,++id);
                 allConstraints.setInstructorForStudent(instructorConstraints[3],instructorConstraints[0]);
             }
@@ -93,8 +106,6 @@ public class CreateConstraintsFromFiles {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
             e.printStackTrace();
         } finally {
             if (br != null) {

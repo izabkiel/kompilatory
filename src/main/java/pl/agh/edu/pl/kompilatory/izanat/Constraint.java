@@ -1,5 +1,6 @@
 package pl.agh.edu.pl.kompilatory.izanat;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -7,8 +8,8 @@ import java.util.Date;
  */
 public class Constraint {
     private String name;
-    private Date start;
-    private Date end;
+    private LocalDateTime start;
+    private LocalDateTime end;
     private int id;
 
     public int getId() {
@@ -27,23 +28,23 @@ public class Constraint {
         this.name = name;
     }
 
-    public Date getStart() {
+    public LocalDateTime getStart() {
         return start;
     }
 
-    public void setStart(Date start) {
+    public void setStart(LocalDateTime start) {
         this.start = start;
     }
 
-    public Date getEnd() {
+    public LocalDateTime getEnd() {
         return end;
     }
 
-    public void setEnd(Date end) {
+    public void setEnd(LocalDateTime end) {
         this.end = end;
     }
 
-    public Constraint(String name, Date start, Date end, int id) {
+    public Constraint(String name, LocalDateTime start, LocalDateTime end, int id) {
         this.name = name;
         this.start = start;
         this.end = end;

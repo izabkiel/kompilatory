@@ -11,6 +11,7 @@ import org.sat4j.specs.TimeoutException;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.LocalDateTime;
 import java.util.*;
 
 /**
@@ -82,7 +83,7 @@ public class AllStudentsConstraints {
         studentCNF.append("0 ");
     }
 
-    public void addContraintToStudent(String name, Date start, Date end, int id) {
+    public void addContraintToStudent(String name, LocalDateTime start, LocalDateTime end, int id) {
         if (checkIfStudentExists(name)) {
             getSpecificStudentAllContraints(name).add(new Constraint(name, start, end, id));
         } else {

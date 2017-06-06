@@ -1,5 +1,6 @@
 package pl.agh.edu.pl.kompilatory.izanat;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -37,7 +38,7 @@ public class AllInstructorsConstraints {
         this.instructorConstraints = instructorConstraints;
     }
 
-    public void addContraintToInstructor(String name, Date start, Date end, int id){
+    public void addContraintToInstructor(String name, LocalDateTime start, LocalDateTime end, int id){
         if (checkIfInstructorExists(name)) {
             getSpecificInstructorAllContraints(name).add(new Constraint(name, start, end, id));
         } else {
