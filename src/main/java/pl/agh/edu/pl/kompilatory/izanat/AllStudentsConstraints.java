@@ -83,12 +83,12 @@ public class AllStudentsConstraints {
         studentCNF.append("0 ");
     }
 
-    public void addContraintToStudent(String name, LocalDateTime start, LocalDateTime end, int id) {
+    public void addContraintToStudent(String name, LocalDateTime start, LocalDateTime end, int id, String instructorName) {
         if (checkIfStudentExists(name)) {
-            getSpecificStudentAllContraints(name).add(new Constraint(name, start, end, id));
+            getSpecificStudentAllContraints(name).add(new StudentConstraint(name, start, end, id, instructorName));
         } else {
             SpecificStudentAllConstraints s = new SpecificStudentAllConstraints();
-            s.addConstraintToStudent(new Constraint(name, start, end, id));
+            s.addConstraintToStudent(new StudentConstraint(name, start, end, id,instructorName));
             constraints.add(s);
         }
     }
@@ -101,7 +101,7 @@ public class AllStudentsConstraints {
         return false;
     }
 
-    public List<Constraint> getSpecificStudentAllContraints(String name) {
+    public List<StudentConstraint> getSpecificStudentAllContraints(String name) {
         for (SpecificStudentAllConstraints s : constraints) {
             if (s.getConstraints().get(0).getName().equals(name)) {
                 return s.getConstraints();

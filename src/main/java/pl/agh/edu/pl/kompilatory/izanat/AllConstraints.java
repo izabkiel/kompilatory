@@ -100,32 +100,51 @@ public class AllConstraints {
         for(InstructorConstraints c: allInstructorsConstraints.getInstructorConstraints()){
             condition.append(genarateConditionForInstructorsStudent(c.getConstraints().get(0).getName()));
         }
+        condition.append(conditionForNonExistingInstructor());
         return condition;
     }
 
     private StringBuilder genarateConditionForInstructorsStudent(String instructorName){
         StringBuilder condition = new StringBuilder("");
         List<Constraint> instructorConstraints = allInstructorsConstraints.getSpecificInstructorAllContraints(instructorName);
-        List<SpecificStudentAllConstraints> instructorStudentsContraints = new LinkedList<SpecificStudentAllConstraints>();
+        List<StudentConstraint> instructorStudentsContraints = new LinkedList<StudentConstraint>();
         for(SpecificStudentAllConstraints s: allStudentsConstraints.getConstraints()){
-            if(s.getInstructorName().equals(instructorName)){
-                instructorStudentsContraints.add(s);
+            for(StudentConstraint st: s.getConstraints()){
+                if(st.getInstructorName().equals(instructorName)) {
+                    instructorStudentsContraints.add(st);
+                }
             }
         }
+        condition.append(checkOverlappingTime(instructorStudentsContraints));
+        condition.append(checkIncludingTime(instructorStudentsContraints,instructorConstraints));
 
-        for (int i = 0; i < instructorStudentsContraints.size(); i++) {
-            for (int j = i + 1; j < instructorStudentsContraints.size(); j++)
-                condition.append(checkOverlappingTime(instructorStudentsContraints.get(i).getConstraints(), instructorStudentsContraints.get(j).getConstraints()));
-        }
-
-        for(SpecificStudentAllConstraints s: instructorStudentsContraints){
-             condition.append(checkIncludingTime(s.getConstraints(),instructorConstraints));
-        }
         return condition;
 
     }
 
-    private String checkIncludingTime(List<Constraint> studentContraints, List<Constraint> instructorConstraints) {
+    private StringBuilder conditionForNonExistingInstructor(){
+        StringBuilder c = new StringBuilder("");
+        for(SpecificStudentAllConstraints s:allStudentsConstraints.getConstraints()){
+            for(StudentConstraint st :s.getConstraints()){
+                if(!checkIfInstructorExists(st.getInstructorName())){
+                    c.append("-"+st.getId()+" 0");
+                }
+            }
+        }
+        return c;
+    }
+
+    public boolean checkIfInstructorExists(String instructorName){
+        for(InstructorConstraints i: allInstructorsConstraints.getInstructorConstraints()){
+            for(Constraint c :i.getConstraints()){
+                if(c.getName().equals(instructorName))
+                    return true;
+            }
+        }
+        return false;
+    }
+
+    private String checkIncludingTime(List<StudentConstraint> studentContraints, List<Constraint> instructorConstraints) {
         String c = "";
         for (Constraint s : studentContraints) {
             boolean add = true;
@@ -142,10 +161,12 @@ public class AllConstraints {
         return c;
     }
 
-    private String checkOverlappingTime(List<Constraint> a, List<Constraint> b) {
+    private String checkOverlappingTime(List<StudentConstraint> a) {
         String c = "";
-        for (Constraint g : a) {
-            for (Constraint m : b) {
+        for (int i =0 ;i<a.size();i++) {
+            StudentConstraint g  = a .get(i);
+            for (int j =i+1 ;j<a.size();j++) {
+                StudentConstraint m = a.get(j);
                 if (!(g.getEnd().isBefore(m.getStart()) || g.getEnd().equals(m.getStart()) || m.getEnd().equals(g.getStart()) || m.getEnd().isBefore(g.getStart()))) {
                     c = c + "-" + g.getId() + " -" + m.getId() + " 0 ";
                     numberOfClouses++;
@@ -154,9 +175,10 @@ public class AllConstraints {
         }
         return c;
     }
-    public void addConstraintToStudent(String name, LocalDateTime start, LocalDateTime end, int id) {
-        allStudentsConstraints.addContraintToStudent(name,start,end,id);
-        allConstraints.add(new Constraint(name,start,end,id));
+
+    public void addConstraintToStudent(String name, LocalDateTime start, LocalDateTime end, int id, String instructorName) {
+        allStudentsConstraints.addContraintToStudent(name,start,end,id, instructorName);
+        allConstraints.add(new StudentConstraint(name,start,end,id,instructorName));
     }
 
     public void addConstraintToInstructor(String name, LocalDateTime start, LocalDateTime end, int id){
@@ -173,12 +195,22 @@ public class AllConstraints {
         return false;
     }
 
-    public void setInstructorForStudent(String intructor, String student){
+    public String getInstructorForConstraint(String name) {
+        for(SpecificStudentAllConstraints sp: allStudentsConstraints.getConstraints()){
+            for(StudentConstraint s : sp.getConstraints()){
+                if(s.getName().equals(name))
+                    return s.getInstructorName();
+            }
+        }
+        return null;
+    }
+
+/*    public void setInstructorForStudent(String intructor, String student){
         allStudentsConstraints.getSpecificStudentByName(student).setInstructorName(intructor);
     }
 
     public String getInstructorForStudent(String name){
         return allStudentsConstraints.getSpecificStudentByName(name).getInstructorName();
 
-    }
+    }*/
 }

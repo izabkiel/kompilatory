@@ -7,29 +7,29 @@ import java.util.List;
  * Created by Izochora on 2017-05-15.
  */
 public class SpecificStudentAllConstraints {
-    private List<Constraint> constraints = new ArrayList<Constraint>();
-    private String instructorName;
+    private List<StudentConstraint> constraints = new ArrayList<>();
+    //private String instructorName;
 
 
     public SpecificStudentAllConstraints() {
     }
 
-    public List<Constraint> getConstraints() {
+    public List<StudentConstraint> getConstraints() {
         return constraints;
     }
 
-    public void setConstraints(List<Constraint> constraints) {
+    public void setConstraints(List<StudentConstraint> constraints) {
         this.constraints = constraints;
     }
 
-    public String getInstructorName() {
+/*    public String getInstructorName() {
         return instructorName;
     }
 
     public void setInstructorName(String constructorName) {
         this.instructorName = constructorName;
-    }
-    public void addConstraintToStudent(Constraint c){
+    }*/
+    public void addConstraintToStudent(StudentConstraint c){
         constraints.add(c);
 
     }

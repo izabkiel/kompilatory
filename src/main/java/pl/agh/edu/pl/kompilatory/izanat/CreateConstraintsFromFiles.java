@@ -64,7 +64,8 @@ public class CreateConstraintsFromFiles {
                 LocalDateTime start = LocalDateTime.parse(startString, formatter);
                 String endString = instructorConstraints[2];
                 LocalDateTime end = LocalDateTime.parse(endString, formatter);
-                allConstraints.addConstraintToInstructor(instructorConstraints[0],start, end,++id);
+                if(end.isAfter(start))
+                    allConstraints.addConstraintToInstructor(instructorConstraints[0],start, end,++id);
             }
 
         } catch (FileNotFoundException e) {
@@ -99,8 +100,12 @@ public class CreateConstraintsFromFiles {
                 LocalDateTime start = LocalDateTime.parse(startString, formatter);
                 String endString = instructorConstraints[2];
                 LocalDateTime end = LocalDateTime.parse(endString, formatter);
-                allConstraints.addConstraintToStudent(instructorConstraints[0],start, end,++id);
-                allConstraints.setInstructorForStudent(instructorConstraints[3],instructorConstraints[0]);
+
+                if(end.isAfter(start) && allConstraints.checkIfInstructorExists(instructorConstraints[3]))
+                    allConstraints.addConstraintToStudent(instructorConstraints[0],start, end,++id,instructorConstraints[3]);
+                else{
+                    System.out.println("Nie dodano ograniczenia "+instructorConstraints[0]+" "+start+" "+end+" "+id+" "+instructorConstraints[3] );
+                }
             }
 
         } catch (FileNotFoundException e) {

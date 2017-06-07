@@ -5,6 +5,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.List;
 
@@ -96,8 +99,10 @@ public class GUI {
                                 JOptionPane.showMessageDialog(null, "Please enter the instructor's name");
                             } else {
                                 JPanel lessonTimeForStudentPanel = new JPanel(new FlowLayout());
-                                final JComboBox startLesson = new JComboBox(hours);
-                                final JComboBox endLesson = new JComboBox(hours);
+                                final JTextField startLesson = new JTextField();
+                                final JTextField endLesson = new JTextField();
+                                startLesson.setPreferredSize(new Dimension(150,20));
+                                endLesson.setPreferredSize(new Dimension(150,20));
                                 final JButton addConstraintButton = new JButton("Add");
                                 lessonTimeForStudentPanel.add(new Label("Add work hours for " + instructorName));
                                 lessonTimeForStudentPanel.add(new Label("Start at"));
@@ -110,18 +115,20 @@ public class GUI {
                                 }
                                 addConstraintButton.addActionListener(new ActionListener() {
                                     public void actionPerformed(ActionEvent e) {
-
-                                        int start = Integer.parseInt(startLesson.getSelectedItem().toString());
-                                        int end = Integer.parseInt(endLesson.getSelectedItem().toString());
-                                        if (end <= start) {
+                                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                                        String startString = startLesson.getText();
+                                        LocalDateTime start = LocalDateTime.parse(startString, formatter);
+                                        String endString = endLesson.getText();
+                                        LocalDateTime end = LocalDateTime.parse(endString, formatter);
+                                        if (end.isBefore(start)) {
                                             JOptionPane.showMessageDialog(null, "Lesson cannot end before it's start");
                                         } else {
-/*                                        if (!allConstraints.checkIfConstraintExists(instructorNameField.getText(), start, end)) {
+                                        if (!allConstraints.checkIfConstraintExists(instructorNameField.getText(), start, end)) {
                                             allConstraints.addConstraintToInstructor(instructorNameField.getText(), start, end, count);
                                             //allConstraints.setInstructorForStudent("paweł",studentNameField.getText());
                                             count++;
                                             addConstraintButton.setEnabled(false);
-                                        }*/
+                                        }
                                         }
                                     }
                                 });
@@ -179,10 +186,6 @@ public class GUI {
                 studentConstraintPanel.add(fieldsForConstraints, BorderLayout.NORTH);
                 final JPanel concreteStudentConstraintsPanel = new JPanel(new GridLayout(0, 1, 2, 2));
                 final JComboBox instructor = new JComboBox(instructorsNames.toArray());
-                JPanel choodeInstructorPanel = new JPanel();
-                choodeInstructorPanel.add(new Label("Select instructor"));
-                choodeInstructorPanel.add(instructor);
-                concreteStudentConstraintsPanel.add(choodeInstructorPanel);
                 addConstraintToStudent.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
                         final String studentName = studentNameField.getText();
@@ -190,28 +193,37 @@ public class GUI {
                             JOptionPane.showMessageDialog(null, "Please enter the student name");
                         } else {
                             JPanel lessonTimeForStudentPanel = new JPanel(new FlowLayout());
-                            final JComboBox startLesson = new JComboBox(hours);
-                            final JComboBox endLesson = new JComboBox(hours);
+                            final JTextField startLesson = new JTextField();
+                            final JTextField endLesson = new JTextField();
+                            startLesson.setPreferredSize(new Dimension(150,20));
+                            endLesson.setPreferredSize(new Dimension(150,20));
                             final JButton addConstraintButton = new JButton("Add");
                             lessonTimeForStudentPanel.add(new Label("Add prefered hours for " + studentName));
                             lessonTimeForStudentPanel.add(new Label("Start of lesson"));
                             lessonTimeForStudentPanel.add(startLesson);
                             lessonTimeForStudentPanel.add(new Label("End of lesson"));
                             lessonTimeForStudentPanel.add(endLesson);
+                            JPanel choodeInstructorPanel = new JPanel();
+                            lessonTimeForStudentPanel.add(new Label("Select instructor"));
+                            lessonTimeForStudentPanel.add(instructor);
+                            concreteStudentConstraintsPanel.add(choodeInstructorPanel);
                             lessonTimeForStudentPanel.add(addConstraintButton);
                             addConstraintButton.addActionListener(new ActionListener() {
                                 public void actionPerformed(ActionEvent e) {
-                                    int start = Integer.parseInt(startLesson.getSelectedItem().toString());
-                                    int end = Integer.parseInt(endLesson.getSelectedItem().toString());
-                                    if (end <= start) {
+                                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                                    String startString = startLesson.getText();
+                                    LocalDateTime start = LocalDateTime.parse(startString, formatter);
+                                    String endString = endLesson.getText();
+                                    LocalDateTime end = LocalDateTime.parse(endString, formatter);
+                                    if (end.isBefore(start)) {
                                         JOptionPane.showMessageDialog(null, "Lesson cannot end before it's start");
                                     } else {
-     /*                                   if (!allConstraints.checkIfConstraintExists(studentNameField.getText(), start, end)) {
-                                            allConstraints.addConstraintToStudent(studentNameField.getText(), start, end, count);
-                                            allConstraints.setInstructorForStudent(instructor.getSelectedItem().toString(),studentNameField.getText());
+                                        if (!allConstraints.checkIfConstraintExists(studentNameField.getText(), start, end)) {
+                                            allConstraints.addConstraintToStudent(studentNameField.getText(), start, end, count,instructor.getSelectedItem().toString());
+                                            //allConstraints.setInstructorForStudent(instructor.getSelectedItem().toString(),studentNameField.getText());
                                             count++;
                                             addConstraintButton.setEnabled(false);
-                                        }*/
+                                        }
                                     }
                                 }
                             });
