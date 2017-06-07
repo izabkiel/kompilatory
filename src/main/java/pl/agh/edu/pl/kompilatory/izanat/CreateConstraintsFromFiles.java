@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
@@ -64,8 +65,11 @@ public class CreateConstraintsFromFiles {
                 LocalDateTime start = LocalDateTime.parse(startString, formatter);
                 String endString = instructorConstraints[2];
                 LocalDateTime end = LocalDateTime.parse(endString, formatter);
-                if(end.isAfter(start))
+                if(end.isAfter(start)  && start.toLocalDate().equals(end.toLocalDate()))
                     allConstraints.addConstraintToInstructor(instructorConstraints[0],start, end,++id);
+                else{
+                    System.out.println("Nie dodano ograniczenia "+instructorConstraints[0]+" "+start+" "+end+" "+id+" ");
+                }
             }
 
         } catch (FileNotFoundException e) {
@@ -100,8 +104,7 @@ public class CreateConstraintsFromFiles {
                 LocalDateTime start = LocalDateTime.parse(startString, formatter);
                 String endString = instructorConstraints[2];
                 LocalDateTime end = LocalDateTime.parse(endString, formatter);
-
-                if(end.isAfter(start) && allConstraints.checkIfInstructorExists(instructorConstraints[3]))
+                if(end.isAfter(start) && allConstraints.checkIfInstructorExists(instructorConstraints[3]) && start.toLocalDate().equals(end.toLocalDate()))
                     allConstraints.addConstraintToStudent(instructorConstraints[0],start, end,++id,instructorConstraints[3]);
                 else{
                     System.out.println("Nie dodano ograniczenia "+instructorConstraints[0]+" "+start+" "+end+" "+id+" "+instructorConstraints[3] );

@@ -8,7 +8,6 @@ import java.util.List;
  */
 public class SpecificStudentAllConstraints {
     private List<StudentConstraint> constraints = new ArrayList<>();
-    //private String instructorName;
 
 
     public SpecificStudentAllConstraints() {
@@ -22,13 +21,6 @@ public class SpecificStudentAllConstraints {
         this.constraints = constraints;
     }
 
-/*    public String getInstructorName() {
-        return instructorName;
-    }
-
-    public void setInstructorName(String constructorName) {
-        this.instructorName = constructorName;
-    }*/
     public void addConstraintToStudent(StudentConstraint c){
         constraints.add(c);
 

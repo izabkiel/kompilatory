@@ -15,7 +15,5 @@ public class App
             }
         });
 
-/*        CreateConstraintsFromFiles createConstraintsFromFiles = new CreateConstraintsFromFiles("instruktorzy.csv", "students.csv");
-        createConstraintsFromFiles.solveSAT();*/
     }
 }

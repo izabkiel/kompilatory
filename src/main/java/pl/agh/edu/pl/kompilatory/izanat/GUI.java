@@ -178,7 +178,11 @@ public class GUI {
                         LocalDateTime end = LocalDateTime.parse(endString, formatter);
                         if (end.isBefore(start)) {
                             JOptionPane.showMessageDialog(null, "Lesson cannot end before it's start");
-                        } else {
+                        }
+                        else if(start.toLocalDate().equals(end.toLocalDate())){
+                            JOptionPane.showMessageDialog(null, "Lesson can take place only in one day");
+                        }
+                        else {
                             if (!allConstraints.checkIfConstraintExists(instructorNameField.getText(), start, end)) {
                                 allConstraints.addConstraintToInstructor(instructorNameField.getText(), start, end, count);
                                 //allConstraints.setInstructorForStudent("paweł",studentNameField.getText());
@@ -255,7 +259,9 @@ public class GUI {
                                     LocalDateTime end = LocalDateTime.parse(endString, formatter);
                                     if (end.isBefore(start)) {
                                         JOptionPane.showMessageDialog(null, "Lesson cannot end before it's start");
-                                    } else {
+                                    }  else if(start.toLocalDate().equals(end.toLocalDate())){
+                                        JOptionPane.showMessageDialog(null, "Working hours can be only in oen day");
+                                    }else {
                                         if (!allConstraints.checkIfConstraintExists(studentNameField.getText(), start, end)) {
                                             allConstraints.addConstraintToStudent(studentNameField.getText(), start, end, count, instructor.getSelectedItem().toString());
                                             //allConstraints.setInstructorForStudent(instructor.getSelectedItem().toString(),studentNameField.getText());
@@ -282,7 +288,6 @@ public class GUI {
         generateSchedule.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ea) {
                 allConstraints.generateSAT();
-                allConstraints.printAllConstraint();
                 solveSAT.setAllConstraints(allConstraints);
                 generatingSchedule(solveSAT.solve(), solveSAT);
             }

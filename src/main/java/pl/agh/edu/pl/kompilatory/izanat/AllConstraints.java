@@ -70,12 +70,6 @@ public class AllConstraints {
     }
 
     public void generateSAT(){
-        System.out.println("Instructor constrains ");
-        for(InstructorConstraints i : allInstructorsConstraints.getInstructorConstraints()){
-            for(Constraint c : i.getConstraints()){
-                System.out.println(c.getName()+ " "+c.getStart()+" "+c.getEnd()+" "+c.getId());
-            }
-        }
         allStudentsConstraints.makeConditionForStudents();
         variables = allStudentsConstraints.getVariables() + allInstructorsConstraints.getVariables();
         StringBuilder c = generateConditionForInstructors();
