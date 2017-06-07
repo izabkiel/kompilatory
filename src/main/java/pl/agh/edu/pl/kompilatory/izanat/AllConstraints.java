@@ -18,7 +18,7 @@ public class AllConstraints {
     public void printAllConstraint() {
         System.out.println("------------");
         for (Constraint c : allConstraints) {
-                System.out.println(c.getName() + " " + c.getStart() + " " + c.getEnd() + " " + c.getId());
+            System.out.println(c.getName() + " " + c.getStart() + " " + c.getEnd() + " " + c.getId());
 
         }
     }
@@ -150,7 +150,7 @@ public class AllConstraints {
             boolean add = true;
             for (Constraint i : instructorConstraints) {
                 if (!(s.getStart().isBefore(i.getStart()) || s.getEnd().isAfter(i.getEnd()))) {
-                   add = false;
+                    add = false;
                 }
             }
             if(add){
@@ -195,10 +195,10 @@ public class AllConstraints {
         return false;
     }
 
-    public String getInstructorForConstraint(String name) {
+    public String getInstructorForConstraint(int id) {
         for(SpecificStudentAllConstraints sp: allStudentsConstraints.getConstraints()){
             for(StudentConstraint s : sp.getConstraints()){
-                if(s.getName().equals(name))
+                if(s.getId()==id)
                     return s.getInstructorName();
             }
         }

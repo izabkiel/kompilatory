@@ -46,7 +46,7 @@ public class SolveSAT {
                 String decodeMessage = reader.decode(problem.model());
                 List<Constraint> c = getTrueConstraints(decodeMessage);
                 for (Constraint i : c) {
-                    System.out.println("Student name " + i.getName() + " start " + i.getStart() + " end " + i.getEnd() + " instructor " + allConstraints.getInstructorForConstraint(i.getName()));
+                    System.out.println("Student name " + i.getName() + " start " + i.getStart() + " end " + i.getEnd() + " instructor " + allConstraints.getInstructorForConstraint(i.getId()));
                 }
                 return getTrueConstraints(decodeMessage);
 
@@ -99,7 +99,7 @@ public class SolveSAT {
                 table[i][0] = con.getName();
                 table[i][1] = String.valueOf(con.getStart());
                 table[i][2] = String.valueOf(con.getEnd());
-                table[i][3] = String.valueOf(allConstraints.getInstructorForConstraint(con.getName()));
+                table[i][3] = String.valueOf(allConstraints.getInstructorForConstraint(con.getId()));
                 i++;
             }
             Arrays.sort(table, new Comparator<String[]>() {

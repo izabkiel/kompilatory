@@ -11,6 +11,7 @@ import org.sat4j.specs.TimeoutException;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -77,10 +78,34 @@ public class AllStudentsConstraints {
 
 
     private void specificStudentCondition(SpecificStudentAllConstraints s) {
-        for (Constraint constraint : s.getConstraints()) {
+        Collections.sort(s.getConstraints(), new Comparator<StudentConstraint>() {
+            @Override
+            public int compare(StudentConstraint o1, StudentConstraint o2) {
+
+                if (o1.getStart().isBefore(o2.getStart()))
+                    return -1;
+                else if (o1.getStart().isAfter(o2.getStart()))
+                    return 1;
+                else
+                    return o1.getInstructorName().compareTo(o2.getInstructorName());
+            }
+        });
+        for (int i = 0; i < s.getConstraints().size() - 1; i++) {
+            LocalDate first = s.getConstraints().get(i).getStart().toLocalDate();
+            LocalDate second = s.getConstraints().get(i + 1).getStart().toLocalDate();
+            studentCNF.append(s.getConstraints().get(i).getId() + " ");
+            if (!first.equals(second)) {
+                studentCNF.append("0 ");
+                numberOfClouses++;
+            }
+
+        }
+        studentCNF.append(s.getConstraints().get(s.getConstraints().size() - 1).getId() + " 0 ");
+/*        for (Constraint constraint : s.getConstraints()) {
             studentCNF.append(constraint.getId() + " ");
         }
         studentCNF.append("0 ");
+        System.out.println("porownanie mistrza " + studentCNF + " " + string);*/
     }
 
     public void addContraintToStudent(String name, LocalDateTime start, LocalDateTime end, int id, String instructorName) {
