@@ -56,7 +56,7 @@ public class CreateConstraintsFromFiles {
             br = new BufferedReader(new FileReader(csvFile));
             br.readLine();
 
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-M-d H:mm:ss");
 
             while ((line = br.readLine()) != null) {
                 String[] instructorConstraints = line.split(cvsSplitBy);
@@ -92,7 +92,7 @@ public class CreateConstraintsFromFiles {
         try {
             br = new BufferedReader(new FileReader(csvFile));
             br.readLine();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-M-d H:mm:ss");
 
             while ((line = br.readLine()) != null) {
                 String[] instructorConstraints = line.split(cvsSplitBy);
