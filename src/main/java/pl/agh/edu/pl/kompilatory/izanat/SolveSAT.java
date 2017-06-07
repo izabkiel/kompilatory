@@ -75,12 +75,10 @@ public class SolveSAT {
 
     private List<Integer> getTrueConditions(String decodeMessage) {
         List<Integer> trueConditions = new ArrayList<Integer>();
-        for (int i = 0; i < decodeMessage.length(); i++) {
-            if (decodeMessage.charAt(i) == '-')
-                i = i + 2;
-            else {
-                trueConditions.add(Integer.parseInt(decodeMessage.charAt(i) + ""));
-                i++;
+        String [] devided = decodeMessage.split(" ");
+        for(String s : devided){
+            if(s.charAt(0)!='-' && s.charAt(0)!='0'){
+                trueConditions.add(Integer.parseInt(s));
             }
         }
         return trueConditions;

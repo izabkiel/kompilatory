@@ -227,7 +227,7 @@ public class GUI {
                 fieldsForConstraints.add(addConstraintToStudent);
                 studentConstraintPanel.add(fieldsForConstraints, BorderLayout.NORTH);
                 final JPanel concreteStudentConstraintsPanel = new JPanel(new GridLayout(0, 1, 2, 2));
-                final JComboBox instructor = new JComboBox(instructorsNames.toArray());
+
                 addConstraintToStudent.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
                         final String studentName = studentNameField.getText();
@@ -247,6 +247,7 @@ public class GUI {
                             lessonTimeForStudentPanel.add(endLesson);
                             JPanel choodeInstructorPanel = new JPanel();
                             lessonTimeForStudentPanel.add(new Label("Select instructor"));
+                            final JComboBox instructor = new JComboBox(instructorsNames.toArray());
                             lessonTimeForStudentPanel.add(instructor);
                             concreteStudentConstraintsPanel.add(choodeInstructorPanel);
                             lessonTimeForStudentPanel.add(addConstraintButton);

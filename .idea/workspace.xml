@@ -2,25 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b593c001-1b5f-4ca4-bcdd-ae97dfaea812" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/pl/agh/edu/pl/kompilatory/izanat/AllConstraints.class" afterPath="$PROJECT_DIR$/target/classes/pl/agh/edu/pl/kompilatory/izanat/AllConstraints.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/pl/agh/edu/pl/kompilatory/izanat/App.class" afterPath="$PROJECT_DIR$/target/classes/pl/agh/edu/pl/kompilatory/izanat/App.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/pl/agh/edu/pl/kompilatory/izanat/CreateConstraintsFromFiles.class" afterPath="$PROJECT_DIR$/target/classes/pl/agh/edu/pl/kompilatory/izanat/CreateConstraintsFromFiles.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/pl/agh/edu/pl/kompilatory/izanat/GUI$3$1$1.class" afterPath="$PROJECT_DIR$/target/classes/pl/agh/edu/pl/kompilatory/izanat/GUI$3$1$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/pl/agh/edu/pl/kompilatory/izanat/GUI$3$1.class" afterPath="$PROJECT_DIR$/target/classes/pl/agh/edu/pl/kompilatory/izanat/GUI$3$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/pl/agh/edu/pl/kompilatory/izanat/GUI$3.class" afterPath="$PROJECT_DIR$/target/classes/pl/agh/edu/pl/kompilatory/izanat/GUI$3.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/pl/agh/edu/pl/kompilatory/izanat/GUI$4.class" afterPath="$PROJECT_DIR$/target/classes/pl/agh/edu/pl/kompilatory/izanat/GUI$4.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/pl/agh/edu/pl/kompilatory/izanat/GUI.class" afterPath="$PROJECT_DIR$/target/classes/pl/agh/edu/pl/kompilatory/izanat/GUI.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/pl/agh/edu/pl/kompilatory/izanat/SolveSAT$1.class" afterPath="$PROJECT_DIR$/target/classes/pl/agh/edu/pl/kompilatory/izanat/SolveSAT$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/pl/agh/edu/pl/kompilatory/izanat/SolveSAT.class" afterPath="$PROJECT_DIR$/target/classes/pl/agh/edu/pl/kompilatory/izanat/SolveSAT.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/pl/agh/edu/pl/kompilatory/izanat/SpecificStudentAllConstraints.class" afterPath="$PROJECT_DIR$/target/classes/pl/agh/edu/pl/kompilatory/izanat/SpecificStudentAllConstraints.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/elo.cnf" afterPath="$PROJECT_DIR$/elo.cnf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/pl/agh/edu/pl/kompilatory/izanat/AllConstraints.java" afterPath="$PROJECT_DIR$/src/main/java/pl/agh/edu/pl/kompilatory/izanat/AllConstraints.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/pl/agh/edu/pl/kompilatory/izanat/App.java" afterPath="$PROJECT_DIR$/src/main/java/pl/agh/edu/pl/kompilatory/izanat/App.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/pl/agh/edu/pl/kompilatory/izanat/CreateConstraintsFromFiles.java" afterPath="$PROJECT_DIR$/src/main/java/pl/agh/edu/pl/kompilatory/izanat/CreateConstraintsFromFiles.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/pl/agh/edu/pl/kompilatory/izanat/GUI.java" afterPath="$PROJECT_DIR$/src/main/java/pl/agh/edu/pl/kompilatory/izanat/GUI.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/pl/agh/edu/pl/kompilatory/izanat/SolveSAT.java" afterPath="$PROJECT_DIR$/src/main/java/pl/agh/edu/pl/kompilatory/izanat/SolveSAT.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/pl/agh/edu/pl/kompilatory/izanat/SpecificStudentAllConstraints.java" afterPath="$PROJECT_DIR$/src/main/java/pl/agh/edu/pl/kompilatory/izanat/SpecificStudentAllConstraints.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -37,8 +21,8 @@
       <file leaf-file-name="GUI.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/pl/agh/edu/pl/kompilatory/izanat/GUI.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="394">
-              <caret line="293" column="11" lean-forward="true" selection-start-line="293" selection-start-column="11" selection-end-line="293" selection-end-column="11" />
+            <state relative-caret-position="235">
+              <caret line="240" column="25" lean-forward="false" selection-start-line="240" selection-start-column="25" selection-end-line="240" selection-end-column="25" />
               <folding>
                 <element signature="e#707#715#0" expanded="true" />
               </folding>
@@ -66,15 +50,25 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SolveSAT.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="SolveSAT.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/pl/agh/edu/pl/kompilatory/izanat/SolveSAT.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="134">
-              <caret line="59" column="28" lean-forward="false" selection-start-line="59" selection-start-column="12" selection-end-line="59" selection-end-column="28" />
+            <state relative-caret-position="221">
+              <caret line="62" column="5" lean-forward="true" selection-start-line="62" selection-start-column="5" selection-end-line="62" selection-end-column="5" />
               <folding>
                 <element signature="e#2031#2043#0" expanded="true" />
                 <element signature="e#2396#2405#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="elo.cnf" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/elo.cnf">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="9" lean-forward="false" selection-start-line="0" selection-start-column="9" selection-end-line="0" selection-end-column="9" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -103,7 +97,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CreateConstraintsFromFiles.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="CreateConstraintsFromFiles.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/pl/agh/edu/pl/kompilatory/izanat/CreateConstraintsFromFiles.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="134">
@@ -179,12 +173,12 @@
         <option value="$PROJECT_DIR$/src/main/java/pl/agh/edu/pl/kompilatory/izanat/StudentConstraints.java" />
         <option value="$PROJECT_DIR$/src/main/java/pl/agh/edu/pl/kompilatory/izanat/StudentConstraint.java" />
         <option value="$PROJECT_DIR$/src/main/java/pl/agh/edu/pl/kompilatory/izanat/AllStudentsConstraints.java" />
-        <option value="$PROJECT_DIR$/src/main/java/pl/agh/edu/pl/kompilatory/izanat/GUI.java" />
-        <option value="$PROJECT_DIR$/src/main/java/pl/agh/edu/pl/kompilatory/izanat/SolveSAT.java" />
         <option value="$PROJECT_DIR$/src/main/java/pl/agh/edu/pl/kompilatory/izanat/SpecificStudentAllConstraints.java" />
         <option value="$PROJECT_DIR$/src/main/java/pl/agh/edu/pl/kompilatory/izanat/App.java" />
         <option value="$PROJECT_DIR$/src/main/java/pl/agh/edu/pl/kompilatory/izanat/AllConstraints.java" />
         <option value="$PROJECT_DIR$/src/main/java/pl/agh/edu/pl/kompilatory/izanat/CreateConstraintsFromFiles.java" />
+        <option value="$PROJECT_DIR$/src/main/java/pl/agh/edu/pl/kompilatory/izanat/GUI.java" />
+        <option value="$PROJECT_DIR$/src/main/java/pl/agh/edu/pl/kompilatory/izanat/SolveSAT.java" />
       </list>
     </option>
   </component>
@@ -959,14 +953,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/elo.cnf">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="9" lean-forward="false" selection-start-line="0" selection-start-column="9" selection-end-line="0" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/pl/agh/edu/pl/kompilatory/izanat/StudentConstraint.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="56">
@@ -983,33 +969,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/pl/agh/edu/pl/kompilatory/izanat/SolveSAT.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="134">
-          <caret line="59" column="28" lean-forward="false" selection-start-line="59" selection-start-column="12" selection-end-line="59" selection-end-column="28" />
-          <folding>
-            <element signature="e#2031#2043#0" expanded="true" />
-            <element signature="e#2396#2405#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/pl/agh/edu/pl/kompilatory/izanat/InstructorConstraints.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="289">
           <caret line="22" column="55" lean-forward="false" selection-start-line="22" selection-start-column="55" selection-end-line="22" selection-end-column="55" />
           <folding>
             <element signature="e#575#576#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/pl/agh/edu/pl/kompilatory/izanat/GUI.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="394">
-          <caret line="293" column="11" lean-forward="true" selection-start-line="293" selection-start-column="11" selection-end-line="293" selection-end-column="11" />
-          <folding>
-            <element signature="e#707#715#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1064,6 +1029,35 @@
         <state relative-caret-position="134">
           <caret line="106" column="108" lean-forward="false" selection-start-line="106" selection-start-column="108" selection-end-line="106" selection-end-column="108" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/pl/agh/edu/pl/kompilatory/izanat/GUI.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="235">
+          <caret line="240" column="25" lean-forward="false" selection-start-line="240" selection-start-column="25" selection-end-line="240" selection-end-column="25" />
+          <folding>
+            <element signature="e#707#715#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/elo.cnf">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="9" lean-forward="false" selection-start-line="0" selection-start-column="9" selection-end-line="0" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/pl/agh/edu/pl/kompilatory/izanat/SolveSAT.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="62" column="5" lean-forward="true" selection-start-line="62" selection-start-column="5" selection-end-line="62" selection-end-column="5" />
+          <folding>
+            <element signature="e#2031#2043#0" expanded="true" />
+            <element signature="e#2396#2405#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
