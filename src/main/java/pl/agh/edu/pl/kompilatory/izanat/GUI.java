@@ -179,7 +179,7 @@ public class GUI {
                         if (end.isBefore(start)) {
                             JOptionPane.showMessageDialog(null, "Lesson cannot end before it's start");
                         }
-                        else if(start.toLocalDate().equals(end.toLocalDate())){
+                        else if(!start.toLocalDate().equals(end.toLocalDate())){
                             JOptionPane.showMessageDialog(null, "Lesson can take place only in one day");
                         }
                         else {
@@ -260,7 +260,7 @@ public class GUI {
                                     LocalDateTime end = LocalDateTime.parse(endString, formatter);
                                     if (end.isBefore(start)) {
                                         JOptionPane.showMessageDialog(null, "Lesson cannot end before it's start");
-                                    }  else if(start.toLocalDate().equals(end.toLocalDate())){
+                                    }  else if(!start.toLocalDate().equals(end.toLocalDate())){
                                         JOptionPane.showMessageDialog(null, "Working hours can be only in oen day");
                                     }else {
                                         if (!allConstraints.checkIfConstraintExists(studentNameField.getText(), start, end)) {
