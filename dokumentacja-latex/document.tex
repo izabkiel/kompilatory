@@ -25,7 +25,7 @@
 	\vspace{0.5cm}
 	{\scshape\Large Informatyka \par}
 	\vspace{1cm}
-	{\huge\bfseries Wykorzystanie SAT Solverów w tworzeniu grafików\par}
+	{\huge\bfseries Wykorzystanie SAT Solverów w tworzeniu harmonogramów\par}
 	\vspace{2cm}
 	{\large Izabela Kiełbasa \\ Natalia Janecka\par}
 	\vfill
@@ -76,19 +76,36 @@ co oznacza, że aby dana formuła była prawdziwa wszystkie jej zmienne muszą b
 \par
 \begin{itemize}
 	\item Instruktor - osoba pracująca, która prowadzi jazdy, ma określone godziny pracy(patrz niżej), jednocześnie może prowadzić zajęcia tylko z jednym kursantem
-	\item kursant - osoba uczestnicząca w zajęciach, może wybrać jednego instruktora z listy, z którym chce odbywać jazdy. Ma określone preferowane godziny zajęć(patrz niżej). Osteczna godzina zajęć zostanie wybrana z listy preferowanych przez kursanta jeśli wybrany przez niego instruktor jest wtedy dostępny  
-	\item Godziny pracy instruktora - para liczb: godzina rozpoczęcia pracy i godzina zakończenia pracy. Pierwsza liczba zawsze musi być mniejsza od drugiej. Może być kilka takich par - oznacza to, że instruktor pracuje z przerwami w godzinach, które nie zawierają sie pomiędzy liczbami w parach.
-	\item Preferowane godziny zajęć - pary liczb - godzina rozpoczęcia i zakończenia jazdy. W tym czasie kursant może odbywać jazdy. Może być ich kilka
+	\item Kursant - osoba uczestnicząca w zajęciach, może na każdą jazdę wybrać jednego instruktora z listy. Ma określone preferowane godziny zajęć(patrz niżej). Ostateczna godzina zajęć zostanie wybrana z listy preferowanych przez kursanta jeśli wybrany przez niego instruktor jest wtedy dostępny. Kursant może mieć tylko jedne zajęcia dziennie.  
+	\item Godziny pracy instruktora - pary: data i godzina rozpoczęcia oraz zakończenia pracy. Pierwszy termin zawsze musi być wcześniejszy niż drugi. Może być kilka takich par dla jednego dnia - oznacza to, że instruktor pracuje z przerwami w godzinach, które nie zawierają sie pomiędzy godzinami w parach.
+	\item Preferowane godziny zajęć - pary: data i godzina rozpoczęcia i zakończenia jazdy. W tym czasie kursant może odbywać jazdy. Może być kilka wylistowanych. Dla konkretnego dnia wybrana zostanie tylko jedna para. Zajęcia nie mogą trwać dłużej niż jeden dzień. Czas rozpoczęcia nie może być ustawiony na pózniejszy niż czas zakończenia.
 
 \end{itemize}
-\section{Tworzenie grafiku}
+\section{Tworzenie harmonogramu jazd}
 \par
-W aplikacji możemy dodać instruktorów i wybrać dla nich godziny pracy. \\ \\ 
+W aplikacji mamy wybór między dwoma sposobami wprowadzenia danych: manualne dodawanie instruktorów, godzin ich pracy oraz studentów i ich preferowanych godzin zajęć; oraz poprzez wczytanie plików .csv z gotowymi danymi.
+Każdemu z tych sposobów odpowiada osobna karta. \\
+\includegraphics[width=0.7\textwidth]{screen-karty.png} \\ \\
+\newpage
+Domyślnie najpierw otwiera się karta z opcją wczytania danych z pliku. Po naciśnięciu odpowiednich przycisków otworzą się okienka do wyszukiwania plików .csv z planem odpowiednio dla studentów i instruktorów. Po wybraniu pliku pod przyciskiem pojawi się jego nazwa. \\ 
+\includegraphics[width=0.7\textwidth]{screen-openFile.png} \\ \\ 
+Po wybraniu obu plików z danymi naciskamy przycisk \textit{Generate schedule} co spowoduje otwarcie nowego okienka z wygenerowanym harmonogramem opartym na naszych danych.\\
+\includegraphics[width=0.5\textwidth]{screen-generate1.png} \\
+\\
+Plik formatu csv stworzony na przykład w Exelu ma taką postać:\\ \includegraphics[width=0.5\textwidth]{dane-inst.png}
 
-\includegraphics[width=0.5\textwidth]{screen-instuktorzy.png} \\ \\
-W drugiej zakładce można dodać kursantów. Wybieramy dla każdego jednego instruktora oraz godziny, w których chciałby mieć zajęcia. \\ \\
+\newpage
+\par
+Jeśli chcemy dodać dane ręcznie wybieramy drugą zakładkę. Pojawią sie nam kolejne dwie zakładki. W pierwszej możemy dodać instruktorów i wybrać dla nich godziny pracy.\\
+\includegraphics[width=0.7\textwidth]{screen-inst.png} \\ \\ 
+Przyciskiem na samej górze(1) dodajemy nowego instruktora, podajemy jego imię, a następnie dodajemy godziny pracy przyciskiem(2). Uzupełniamy datę i godzinę początku i końca w formacie yyyy-MM-dd HH:mm:ss. Jeśli instruktor ma przerwę w pracy możemy dodać kilka zakresów czasu, w którym pracuje. Aby dodać ograniczenia czasowe klikamy przycisk (3). \\ \\ \\
 
-\includegraphics[width=0.5\textwidth]{screen-kursanci.png} \\ \\
-Kiedy dodaliśmy już wszystkie preferencje klikamy przycisk $Generate$. W nowym okienku pokaże nam się wygenerowany przez SAT grafik, który spełnia wszystkie ograniczenia. \\ Wynikowa tabelka jest posortowana według instruktorów, a następnie godzin rozpoczęcia jazdy. \\ \\
-\includegraphics[width=0.5\textwidth]{screen-final.png}
+
+
+W drugiej zakładce można dodać kursantów. Za pomoca przycisku (1) dodajemy nowego kursanta i nadajemy mu imię. Następnie wybieramy (2) i dodajemy preferowane godziny zajęć oraz instruktora z listy(4). Po wpisaniu danych zatwierdzamy je przyciskiem(3). Jeśli chcemy dodać kolejny preferowany przedział czasowy ponownie klikamy(2/5). \\ 
+\includegraphics[width=0.7\textwidth]{screen-stud.png} \\ \\ 
+
+Kiedy dodaliśmy już wszystkie preferencje klikamy przycisk $Generate$(6). W nowym okienku pokaże nam się wygenerowany przez SAT grafik, który spełnia wszystkie ograniczenia. \\ Wynikowa tabelka jest posortowana według instruktorów, a następnie godzin rozpoczęcia jazdy. \\ \\
+\includegraphics[width=0.5\textwidth]{screen-schedule.png} \\
+Jeśli nie da się spełnić wszystkich ograniczeń pojawi się okienko: \includegraphics[width=0.5\textwidth]{screen-unsatisfiable.png}
 \end{document}

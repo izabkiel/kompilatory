@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (MiKTeX 2.9.6210 64-bit) (preloaded format=pdflatex 2017.6.1)  1 JUN 2017 21:00
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (MiKTeX 2.9.6210 64-bit) (preloaded format=pdflatex 2017.6.1)  7 JUN 2017 21:29
 entering extended mode
 **./document.tex
 (document.tex
@@ -735,86 +735,145 @@ LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
  [1
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 86--87
+<screen-karty.png, id=19, 745.28438pt x 232.61906pt>
+File: screen-karty.png Graphic file (type png)
+ <use screen-karty.png>
+Package pdftex.def Info: screen-karty.png used on input line 88.
+(pdftex.def)             Requested size: 320.46199pt x 100.02069pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 86--89
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 86--87
+Underfull \hbox (badness 10000) in paragraph at lines 86--89
 
  []
 
-<screen-instuktorzy.png, id=19, 746.03719pt x 372.64218pt>
-File: screen-instuktorzy.png Graphic file (type png)
+[2 <./screen-karty.png>]
+<screen-openFile.png, id=23, 813.79031pt x 348.55219pt>
+File: screen-openFile.png Graphic file (type png)
 
-<use screen-instuktorzy.png>
-Package pdftex.def Info: screen-instuktorzy.png used on input line 88.
-(pdftex.def)             Requested size: 228.90242pt x 114.33517pt.
+<use screen-openFile.png>
+Package pdftex.def Info: screen-openFile.png used on input line 91.
+(pdftex.def)             Requested size: 320.46199pt x 137.25377pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 88--90
+<screen-generate1.png, id=24, 802.49812pt x 278.54062pt>
+File: screen-generate1.png Graphic file (type png)
 
- []
+<use screen-generate1.png>
+Package pdftex.def Info: screen-generate1.png used on input line 93.
+(pdftex.def)             Requested size: 228.90242pt x 79.44864pt.
+ <dane-inst.png, id=25, 304.88907pt x 150.5625pt>
+File: dane-inst.png Graphic file (type png)
 
+<use dane-inst.png>
+Package pdftex.def Info: dane-inst.png used on input line 95.
+(pdftex.def)             Requested size: 228.90242pt x 113.04105pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 88--90
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 88--90
-
- []
-
-<screen-kursanci.png, id=20, 743.77875pt x 439.6425pt>
-File: screen-kursanci.png Graphic file (type png)
-
-<use screen-kursanci.png>
-Package pdftex.def Info: screen-kursanci.png used on input line 91.
-(pdftex.def)             Requested size: 228.90242pt x 135.30162pt.
- <screen-final.png, id=21, 802.49812pt x 554.07pt>
-File: screen-final.png Graphic file (type png)
-
-<use screen-final.png>
-Package pdftex.def Info: screen-final.png used on input line 93.
-(pdftex.def)             Requested size: 228.90242pt x 158.0384pt.
-
-Underfull \hbox (badness 10000) in paragraph at lines 91--94
+Underfull \hbox (badness 10000) in paragraph at lines 90--96
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 91--94
+Underfull \hbox (badness 10000) in paragraph at lines 90--96
 
  []
 
-[2 <./screen-instuktorzy.png>] [3 <./screen-kursanci.png> <./screen-final.png>]
-(document.aux) ) 
+[3 <./screen-openFile.png> <./screen-generate1.png> <./dane-inst.png>]
+<screen-inst.png, id=29, 740.0147pt x 261.22594pt>
+File: screen-inst.png Graphic file (type png)
+ <use screen-inst.png>
+Package pdftex.def Info: screen-inst.png used on input line 100.
+(pdftex.def)             Requested size: 320.46199pt x 113.12215pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 99--102
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 99--102
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 99--102
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 99--102
+
+ []
+
+<screen-stud.png, id=30, 736.25063pt x 514.92375pt>
+File: screen-stud.png Graphic file (type png)
+ <use screen-stud.png>
+Package pdftex.def Info: screen-stud.png used on input line 106.
+(pdftex.def)             Requested size: 320.46199pt x 224.13144pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 105--107
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 105--107
+
+ []
+
+<screen-schedule.png, id=31, 616.55344pt x 395.97937pt>
+File: screen-schedule.png Graphic file (type png)
+
+<use screen-schedule.png>
+Package pdftex.def Info: screen-schedule.png used on input line 109.
+(pdftex.def)             Requested size: 228.90242pt x 147.01157pt.
+
+<screen-unsatisfiable.png, id=32, 419.31656pt x 181.42781pt>
+File: screen-unsatisfiable.png Graphic file (type png)
+
+<use screen-unsatisfiable.png>
+Package pdftex.def Info: screen-unsatisfiable.png used on input line 110.
+(pdftex.def)             Requested size: 228.90242pt x 99.04091pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 108--111
+
+ []
+
+
+Overfull \hbox (46.0702pt too wide) in paragraph at lines 108--111
+\OT4/cmr/m/n/10 Je±li nie da si¦ speª-ni¢ wszyst-kich ogra-ni-cze« po-ja-wi si¦
+ okien-ko: [] 
+ []
+
+[4 <./screen-inst.png> <./screen-stud.png>] [5 <./screen-schedule.png> <./scree
+n-unsatisfiable.png>] (document.aux) ) 
 Here is how much of TeX's memory you used:
- 4935 strings out of 493333
- 65924 string characters out of 3139186
+ 4960 strings out of 493333
+ 66439 string characters out of 3139186
  141880 words of memory out of 3000000
- 8378 multiletter control sequences out of 15000+200000
+ 8398 multiletter control sequences out of 15000+200000
  12929 words of font info for 35 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  41i,5n,35p,450b,1088s stack positions out of 5000i,500n,10000p,200000b,50000s
-{C:/Users/Nathalie/AppData/Roaming/MiKTeX/2.9/fonts/enc/dvips/p
-l/plit.enc}{C:/Users/Nathalie/AppData/Roaming/MiKTeX/2.9/fonts/enc/dvips/pl/plm
-s.enc}{C:/Users/Nathalie/AppData/Roaming/MiKTeX/2.9/fonts/enc/dvips/pl/plmi.enc
-}{C:/Users/Nathalie/AppData/Roaming/MiKTeX/2.9/fonts/enc/dvips/pl/plrm.enc}{C:/
-Users/Nathalie/AppData/Roaming/MiKTeX/2.9/fonts/enc/dvips/pl/plsc.enc}<C:/Progr
-am Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/Nathali
-e/AppData/Roaming/MiKTeX/2.9/fonts/type1/public/pl/plbx10.pfb><C:/Users/Nathali
-e/AppData/Roaming/MiKTeX/2.9/fonts/type1/public/pl/plbx12.pfb><C:/Users/Nathali
-e/AppData/Roaming/MiKTeX/2.9/fonts/type1/public/pl/plbxti10.pfb><C:/Users/Natha
-lie/AppData/Roaming/MiKTeX/2.9/fonts/type1/public/pl/plcsc10.pfb><C:/Users/Nath
-alie/AppData/Roaming/MiKTeX/2.9/fonts/type1/public/pl/plmi10.pfb><C:/Users/Nath
-alie/AppData/Roaming/MiKTeX/2.9/fonts/type1/public/pl/plr10.pfb><C:/Users/Natha
-lie/AppData/Roaming/MiKTeX/2.9/fonts/type1/public/pl/plr12.pfb><C:/Users/Nathal
-ie/AppData/Roaming/MiKTeX/2.9/fonts/type1/public/pl/plsy10.pfb><C:/Users/Nathal
-ie/AppData/Roaming/MiKTeX/2.9/fonts/type1/public/pl/plti10.pfb>
-Output written on document.pdf (4 pages, 239203 bytes).
+{C:/Users/Nathalie/AppData/Roaming/MiKTeX
+/2.9/fonts/enc/dvips/pl/plit.enc}{C:/Users/Nathalie/AppData/Roaming/MiKTeX/2.9/
+fonts/enc/dvips/pl/plms.enc}{C:/Users/Nathalie/AppData/Roaming/MiKTeX/2.9/fonts
+/enc/dvips/pl/plmi.enc}{C:/Users/Nathalie/AppData/Roaming/MiKTeX/2.9/fonts/enc/
+dvips/pl/plrm.enc}{C:/Users/Nathalie/AppData/Roaming/MiKTeX/2.9/fonts/enc/dvips
+/pl/plsc.enc}<C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10
+.pfb><C:/Users/Nathalie/AppData/Roaming/MiKTeX/2.9/fonts/type1/public/pl/plbx10
+.pfb><C:/Users/Nathalie/AppData/Roaming/MiKTeX/2.9/fonts/type1/public/pl/plbx12
+.pfb><C:/Users/Nathalie/AppData/Roaming/MiKTeX/2.9/fonts/type1/public/pl/plbxti
+10.pfb><C:/Users/Nathalie/AppData/Roaming/MiKTeX/2.9/fonts/type1/public/pl/plcs
+c10.pfb><C:/Users/Nathalie/AppData/Roaming/MiKTeX/2.9/fonts/type1/public/pl/plm
+i10.pfb><C:/Users/Nathalie/AppData/Roaming/MiKTeX/2.9/fonts/type1/public/pl/plr
+10.pfb><C:/Users/Nathalie/AppData/Roaming/MiKTeX/2.9/fonts/type1/public/pl/plr1
+2.pfb><C:/Users/Nathalie/AppData/Roaming/MiKTeX/2.9/fonts/type1/public/pl/plsy1
+0.pfb><C:/Users/Nathalie/AppData/Roaming/MiKTeX/2.9/fonts/type1/public/pl/plti1
+0.pfb>
+Output written on document.pdf (6 pages, 297192 bytes).
 PDF statistics:
- 64 PDF objects out of 1000 (max. 8388607)
+ 75 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 21 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 46 words of extra memory for PDF output out of 10000 (max. 10000000)
 
