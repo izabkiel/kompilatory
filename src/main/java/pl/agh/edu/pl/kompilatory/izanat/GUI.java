@@ -5,7 +5,10 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -23,7 +26,7 @@ public class GUI {
     private SolveSAT solveSAT = new SolveSAT();
     private final JPanel studentPanel = new JPanel(new BorderLayout());
     private final JPanel instructorPanel = new JPanel(new BorderLayout());
-    private final JPanel readFromFilePanel = new JPanel(new GridLayout(2,1));
+    private final JPanel readFromFilePanel = new JPanel(new GridLayout(2, 1));
     private String instructorPath = "";
     private String studentPath = "";
     private final JTabbedPane mainTabs = new JTabbedPane();
@@ -68,10 +71,11 @@ public class GUI {
         JPanel generateSchPanel = new JPanel();
         final JFileChooser fcI = new JFileChooser();
         final JButton getConstraintsFromFileButton = new JButton("Load file with instructor constraints");
-        Label studentLabel =new Label("no file loaded");
-        Label instructorLabel =new Label("no file loaded");
+        Label studentLabel = new Label("no file loaded");
+        Label instructorLabel = new Label("no file loaded");
         addFilesPanel.add(getConstraintsFromFileButton);
         FileNameExtensionFilter filter3 = new FileNameExtensionFilter("csv", "csv");
+        fcI.setDialogTitle("Add instructors file");
         fcI.setFileFilter(filter3);
         getConstraintsFromFileButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -89,6 +93,7 @@ public class GUI {
 
         final JButton getStudentConstraintsFromFileButton = new JButton("Load file with student constraints");
         final JFileChooser fcS = new JFileChooser();
+        fcS.setDialogTitle("Add students file");
         fcS.setFileFilter(filter3);
         getStudentConstraintsFromFileButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -104,13 +109,13 @@ public class GUI {
             }
         });
 
-        JPanel studentChooserPanel = new JPanel(new GridLayout(2,1));
+        JPanel studentChooserPanel = new JPanel(new GridLayout(2, 1));
         studentChooserPanel.add(getStudentConstraintsFromFileButton);
 
         studentChooserPanel.add(studentLabel);
         addFilesPanel.add(studentChooserPanel);
         readFromFilePanel.add(addFilesPanel);
-        JPanel instructorChooserPanel = new JPanel(new GridLayout(2,1));
+        JPanel instructorChooserPanel = new JPanel(new GridLayout(2, 1));
         instructorChooserPanel.add(getConstraintsFromFileButton);
 
         instructorChooserPanel.add(instructorLabel);
@@ -178,11 +183,9 @@ public class GUI {
                         LocalDateTime end = LocalDateTime.parse(endString, formatter);
                         if (end.isBefore(start)) {
                             JOptionPane.showMessageDialog(null, "Lesson cannot end before it's start");
-                        }
-                        else if(!start.toLocalDate().equals(end.toLocalDate())){
+                        } else if (!start.toLocalDate().equals(end.toLocalDate())) {
                             JOptionPane.showMessageDialog(null, "Lesson can take place only in one day");
-                        }
-                        else {
+                        } else {
                             if (!allConstraints.checkIfConstraintExists(instructorNameField.getText(), start, end)) {
                                 allConstraints.addConstraintToInstructor(instructorNameField.getText(), start, end, count);
                                 //allConstraints.setInstructorForStudent("paweł",studentNameField.getText());
@@ -260,9 +263,9 @@ public class GUI {
                                     LocalDateTime end = LocalDateTime.parse(endString, formatter);
                                     if (end.isBefore(start)) {
                                         JOptionPane.showMessageDialog(null, "Lesson cannot end before it's start");
-                                    }  else if(!start.toLocalDate().equals(end.toLocalDate())){
+                                    } else if (!start.toLocalDate().equals(end.toLocalDate())) {
                                         JOptionPane.showMessageDialog(null, "Working hours can be only in oen day");
-                                    }else {
+                                    } else {
                                         if (!allConstraints.checkIfConstraintExists(studentNameField.getText(), start, end)) {
                                             allConstraints.addConstraintToStudent(studentNameField.getText(), start, end, count, instructor.getSelectedItem().toString());
                                             //allConstraints.setInstructorForStudent(instructor.getSelectedItem().toString(),studentNameField.getText());
@@ -305,15 +308,41 @@ public class GUI {
     private void generatingSchedule(List<Constraint> solution, SolveSAT solveSAT) {
         String[][] trueConstraint = solveSAT.getTableOfResults(solution);
         JFrame resultWindow = new JFrame("Schedule");
-        resultWindow.setLayout(new GridLayout(0, 1, 2, 2));
+        JPanel resultPanel = new JPanel();
+        resultWindow.add(resultPanel);
+        //resultWindow.setLayout(new GridLayout(2, 1));
 
         if (trueConstraint != null) {
             String[] columnNames = {"Students name", "Start of the lesson", "End of the lesson", "Instructor"};
             JTable table = new JTable(trueConstraint, columnNames);
             JScrollPane scrollPane = new JScrollPane(table);
-            resultWindow.add(scrollPane);
+            resultPanel.add(scrollPane);
         } else
-            resultWindow.add(new Label(" Unsatisfiable"));
+            resultPanel.add(new Label(" Unsatisfiable"));
+        JPanel savePanelik = new JPanel(new GridLayout(2,1));
+        JButton saveBtn = new JButton("Save to file");
+        savePanelik.add(saveBtn);
+        saveBtn.addActionListener(e -> {
+            try {
+                BufferedWriter br = new BufferedWriter(new FileWriter("schedule.csv"));
+                StringBuilder sb = new StringBuilder();
+                for (String[] el : trueConstraint) {
+                    for (String element : el) {
+                        sb.append(element);
+                        sb.append(";");
+                    }
+                    sb.append("\n");
+                }
+                br.write(sb.toString());
+                br.close();
+                Label labelka = new Label("Saved");
+                savePanelik.add(labelka);
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        });
+
+        resultPanel.add(savePanelik);
         resultWindow.pack();
 
         resultWindow.setLocationByPlatform(true);
